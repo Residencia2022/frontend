@@ -1,30 +1,59 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+:root {
+  --red-color: #CF0A2C;
 }
 
-nav {
-  padding: 30px;
+.desktop-only {
+  display: none;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+main.row {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.form-control {
+  border-color: var(--red-color) !important;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
+}
+
+.form-check-input {
+  border-color: var(--red-color) !important;
+}
+
+.form-check-input:focus {
+  box-shadow: none !important;
+}
+
+.form-check-input:checked {
+  background-color: var(--red-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
+}
+
+.btn-primary {
+  border-color: var(--red-color) !important;
+  background-color: var(--red-color) !important;
+}
+
+.btn-primary:active, .btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
+}
+
+.bg-huawei {
+  background: linear-gradient(180deg, rgba(248, 175, 151, 0.3) 0%, rgba(154, 8, 13, 0.3) 96.13%);
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block;
+  }
 }
 </style>

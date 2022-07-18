@@ -1,7 +1,11 @@
 <template>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/login">Login</router-link>
+  </nav>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 

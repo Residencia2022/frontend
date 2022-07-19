@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import LoginService from '../services/LoginService'
+import LoginService from '@/services/LoginService'
 
 export default {
   name: 'LoginView',
@@ -53,22 +53,21 @@ export default {
     }
   },
   methods: {
-    login () {
-      LoginService.login(this.email, this.password)
-        .then(response => {
-          this.$store.commit('setUser', response.data)
-          if (this.remember) {
-            localStorage.setItem('user', JSON.stringify(response.data))
-          }
-          this.$router.push('/dashboard')
+    async login () {
+      try {
+        const response = await LoginService.login(this.email, this.password)
+        this.$store.commit('setUser', response.data)
+        if (this.remember) {
+          localStorage.setItem('user', JSON.stringify(response.data))
+        }
+        this.$router.push('/dashboard')
+      } catch (error) {
+        this.$swal.fire({
+          title: 'Error',
+          text: error.response.data.error || 'Something went wrong',
+          icon: 'error'
         })
-        .catch(error => {
-          this.$swal.fire({
-            title: 'Error',
-            text: error.response.data.error,
-            icon: 'error'
-          })
-        })
+      }
     }
   }
 }

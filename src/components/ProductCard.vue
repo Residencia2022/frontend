@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'ManagerCard'
+  name: 'ProductCard'
 }
 </script>
 

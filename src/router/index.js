@@ -2,7 +2,7 @@ import store from '@/store'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import PanelView from '../views/PanelView.vue'
+import DashboardView from '../views/DashboardView.vue'
 
 const routes = [
   {
@@ -16,9 +16,9 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/panel',
-    name: 'panel',
-    component: PanelView
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView
   }
 ]
 

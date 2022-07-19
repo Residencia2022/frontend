@@ -7,10 +7,6 @@
   --red-color: #CF0A2C;
 }
 
-.desktop-only {
-  display: none;
-}
-
 main.row {
   width: 100%;
   min-height: 100vh;
@@ -49,11 +45,5 @@ main.row {
 
 .bg-huawei {
   background: linear-gradient(180deg, rgba(248, 175, 151, 0.3) 0%, rgba(154, 8, 13, 0.3) 96.13%);
-}
-
-@media (min-width: 768px) {
-  .desktop-only {
-    display: block;
-  }
 }
 </style>

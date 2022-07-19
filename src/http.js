@@ -1,5 +1,9 @@
 import axios from 'axios'
 
-export default axios.create({
-  baseURL: 'https://huawei-tac-test.herokuapp.com'
+const url = 'https://huawei-tac-test.herokuapp.com'
+
+const http = axios.create({
+  baseURL: url
 })
+
+export { http, url }

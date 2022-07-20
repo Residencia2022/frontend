@@ -12,6 +12,7 @@
 import DashboardHeader from '@/components/DashboardHeader.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
 
+import CalendarService from '@/services/CalendarService'
 import ProductsService from '@/services/ProductsService'
 
 export default {
@@ -50,6 +51,10 @@ export default {
       users: [],
       interns: [],
       events: [],
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      eventsFiltered: [],
+      filterEventsBy: 0,
       isLoading: true
     }
   },
@@ -57,12 +62,11 @@ export default {
     this.user = this.$store.getters.getUser
     try {
       const { TOKEN } = this.user
-      // year and month for getting the events
-      // CalendarService
+      CalendarService.setToken(TOKEN)
+      await this.getCalendarEvents()
       const { ROL } = this.user
       if (ROL === 'MANAGER') {
         this.pages.splice(0, 3)
-        // Filter events by ID_PRODUCT_LINE
       } else {
         // InternsService
         ProductsService.setToken(TOKEN)
@@ -80,9 +84,32 @@ export default {
       this.isLoading = false
     }
   },
+  watch: {
+    filterEventsBy: {
+      handler () {
+        this.filterEvents()
+      },
+      immediate: true
+    }
+  },
   methods: {
     setSelected (index) {
       this.pageSelected = index
+    },
+    async getCalendarEvents () {
+      const events = await CalendarService.getCalendarByMonth(this.year, this.month)
+      this.events = events.data
+      this.filterEvents()
+    },
+    filterEvents () {
+      const { ID_PRODUCT_LINE } = this.user
+      if (ID_PRODUCT_LINE) {
+        this.eventsFiltered = this.events.filter(event => event.ID_PRODUCT_LINE === ID_PRODUCT_LINE)
+      } else if (this.filterEventsBy) {
+        this.eventsFiltered = this.events.filter(event => event.ID_PRODUCT_LINE === this.filterEventsBy)
+      } else {
+        this.eventsFiltered = this.events
+      }
     }
   }
 }

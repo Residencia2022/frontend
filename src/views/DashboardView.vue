@@ -1,15 +1,24 @@
 <template>
-  <main class="row justify-content-center">
+  <div class="d-flex align-items-center justify-content-center w-100 min-vh-100" v-if="isLoading">
+    <div class="spinner-border text-danger" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <main class="row" v-else>
     <menu-container :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
     <section class="col col-12 col-md-9 p-5">
       <dashboard-header :user="user.FIRST_NAME" :title="pages[pageSelected].title"
         :subtitle="pages[pageSelected].subtitle" />
+      <article class="row mt-5" v-if="pages[pageSelected].title === 'calendar'">
+        <duty-list :attributes="attributes" :user="user" />
+      </article>
     </section>
   </main>
 </template>
 
 <script>
 import DashboardHeader from '@/components/DashboardHeader.vue'
+import DutyList from '@/components/DutyList.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
 
 import CalendarService from '@/services/CalendarService'
@@ -19,6 +28,7 @@ export default {
   name: 'DashboardView',
   components: {
     DashboardHeader,
+    DutyList,
     MenuContainer
   },
   data () {
@@ -53,7 +63,7 @@ export default {
       events: [],
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
-      eventsFiltered: [],
+      attributes: [],
       filterEventsBy: 0,
       isLoading: true
     }
@@ -98,17 +108,40 @@ export default {
     },
     async getCalendarEvents () {
       const events = await CalendarService.getCalendarByMonth(this.year, this.month)
-      this.events = events.data
+      this.events = events.data.map(event => {
+        const stylesAdmin = ['bg-info', 'bg-danger', 'bg-primary', 'bg-warning', 'bg-secondary', 'bg-success']
+        const stylesManager = ['bg-primary', 'bg-success', 'bg-warning', 'bg-danger']
+        let style = ''
+        const { ROL } = this.user
+        if (ROL === 'ADMIN') {
+          style = stylesAdmin[event.ID_PRODUCT_LINE - 1]
+        } else {
+          style = stylesManager[event.ID_SCHEDULE - 1]
+        }
+        const date = event.DATES.split('T')[0].split('-')
+        const year = parseInt(date[0])
+        const month = parseInt(date[1]) - 1
+        const day = parseInt(date[2])
+        return {
+          key: event.ID_CALENDAR,
+          customData: {
+            class: style,
+            line: event.ID_PRODUCT_LINE,
+            title: event.EMPLOYEE
+          },
+          dates: new Date(year, month, day)
+        }
+      })
       this.filterEvents()
     },
     filterEvents () {
       const { ID_PRODUCT_LINE } = this.user
       if (ID_PRODUCT_LINE) {
-        this.eventsFiltered = this.events.filter(event => event.ID_PRODUCT_LINE === ID_PRODUCT_LINE)
+        this.attributes = this.events.filter(event => event.customData.line === ID_PRODUCT_LINE)
       } else if (this.filterEventsBy) {
-        this.eventsFiltered = this.events.filter(event => event.ID_PRODUCT_LINE === this.filterEventsBy)
+        this.attributes = this.events.filter(event => event.customData.line === this.filterEventsBy)
       } else {
-        this.eventsFiltered = this.events
+        this.attributes = this.events
       }
     }
   }

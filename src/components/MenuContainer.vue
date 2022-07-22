@@ -11,7 +11,7 @@
       <button-logout />
     </div>
   </div>
-  <menu-content :desktop="true" :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
+  <menu-content desktop :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <aside
-    :class="['col col-md-3 pe-0 flex-column justify-content-between', desktop ? 'bg-huawei d-none d-md-flex' : '']">
+    :class="['col col-md-3 col-xl-2 pe-0 flex-column justify-content-between', desktop ? 'bg-huawei d-none d-md-flex' : '']">
     <nav class="nav flex-column">
       <image-logo v-if="desktop" />
       <button v-for="(page, index) in pages" :key="index"

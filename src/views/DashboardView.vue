@@ -6,15 +6,14 @@
   </div>
   <main class="row" v-else>
     <menu-container :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
-    <section class="col col-12 col-md-9 p-5">
+    <section class="col col-12 col-md-9 col-xl-10 p-5">
       <dashboard-header :user="user.FIRST_NAME" :title="pages[pageSelected].title"
         :subtitle="pages[pageSelected].subtitle" />
       <article class="row flex-xxl-row-reverse mt-5" v-if="pages[pageSelected].title === 'calendar'">
-        <div class="col col-12 col-md-8 col-lg-6 col-xxl-3" v-if="user.ROL === 'ADMIN'">
-          <filter-list :admin="true" :data="products" :styles="productStyles" :filterBy="filterEventsBy"
-            :filter="setFilter" />
+        <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-if="user.ROL === 'ADMIN'">
+          <filter-list admin :data="products" :styles="productStyles" :filterBy="filterEventsBy" :filter="setFilter" />
         </div>
-        <div class="col col-12 col-md-8 col-lg-6 col-xxl-3" v-else>
+        <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-else>
           <!-- <filter-list :data="products" :styles="productStyles" /> -->
         </div>
         <duty-list :attributes="attributes" :user="user" />
@@ -92,6 +91,7 @@ export default {
     }
   },
   async mounted () {
+    console.time('Dashboard loaded in:')
     this.user = this.$store.getters.getUser
     try {
       const { TOKEN } = this.user
@@ -116,6 +116,7 @@ export default {
     } finally {
       this.isLoading = false
     }
+    console.timeEnd('Dashboard loaded in:')
   },
   watch: {
     filterEventsBy: {
@@ -133,7 +134,8 @@ export default {
       this.filterEventsBy = line
     },
     async getCalendarEvents () {
-      const events = await CalendarService.getCalendarByMonth(this.year, this.month)
+      // const events = await CalendarService.getCalendarByMonth(this.year, this.month)
+      const events = await CalendarService.getCalendar()
       this.events = events.data.map(event => {
         let style = ''
         const { ROL } = this.user

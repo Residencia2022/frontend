@@ -10,7 +10,7 @@
       <dashboard-header :user="user.FIRST_NAME" :title="pages[pageSelected].title"
         :subtitle="pages[pageSelected].subtitle" />
       <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'home'">
-        <product-card :home="products" :styles="productStyles" />
+        <product-card :products="products" :styles="productStyles" :icons="productIcons" />
       </article>
       <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'users'">
         <manager-card :users="users" />
@@ -86,6 +86,14 @@ export default {
         'bg-core',
         'bg-app',
         'bg-remote'
+      ],
+      productIcons: [
+        'fa-tower-cell',
+        'fa-arrow-right-to-city',
+        'fa-server',
+        'fa-cloud',
+        'fa-file-code',
+        'fa-caravan'
       ],
       users: [],
       interns: [],

@@ -9,6 +9,12 @@
     <section class="col col-12 col-md-9 col-xl-10 p-5">
       <dashboard-header :user="user.FIRST_NAME" :title="pages[pageSelected].title"
         :subtitle="pages[pageSelected].subtitle" />
+      <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'home'">
+        <product-card :home="products" :styles="productStyles" />
+      </article>
+      <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'users'">
+        <manager-card :users="users" />
+      </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="pages[pageSelected].title === 'calendar'">
         <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-if="user.ROL === 'ADMIN'">
           <filter-list admin :data="products" :styles="productStyles" :filterBy="filterEventsBy" :filter="setFilter" />
@@ -26,10 +32,15 @@
 import DashboardHeader from '@/components/DashboardHeader.vue'
 import DutyList from '@/components/DutyList.vue'
 import FilterList from '@/components/FilterList.vue'
+import ManagerCard from '@/components/ManagerCard.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
+import ProductCard from '@/components/ProductCard.vue'
 
 import CalendarService from '@/services/CalendarService'
+import InternsService from '@/services/InternsService'
 import ProductsService from '@/services/ProductsService'
+import SchedulesService from '@/services/SchedulesService'
+import UsersService from '@/services/UsersService'
 
 export default {
   name: 'DashboardView',
@@ -37,7 +48,9 @@ export default {
     DashboardHeader,
     DutyList,
     FilterList,
-    MenuContainer
+    ManagerCard,
+    MenuContainer,
+    ProductCard
   },
   data () {
     return {
@@ -83,6 +96,7 @@ export default {
         'bg-warning',
         'bg-danger'
       ],
+      schedules: [],
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
       attributes: [],
@@ -97,15 +111,22 @@ export default {
       const { TOKEN } = this.user
       CalendarService.setToken(TOKEN)
       await this.getCalendarEvents()
+      SchedulesService.setToken(TOKEN)
+      const schedules = await SchedulesService.getSchedules()
+      this.schedules = schedules.data
       const { ROL } = this.user
       if (ROL === 'MANAGER') {
         this.pages.splice(0, 3)
       } else {
-        // InternsService
+        InternsService.setToken(TOKEN)
+        const interns = await InternsService.getInterns()
+        this.interns = interns.data
         ProductsService.setToken(TOKEN)
         const products = await ProductsService.getProducts()
         this.products = products.data
-        // UsersService
+        UsersService.setToken(TOKEN)
+        const users = await UsersService.getUsers()
+        this.users = users.data
       }
     } catch (error) {
       this.$swal.fire({

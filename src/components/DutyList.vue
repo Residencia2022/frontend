@@ -6,7 +6,7 @@
         <div class="fs-6 text-white">
           <p v-for="attr in attributes" :key="attr.key"
             :class="['rounded p-1 m-1', user.ROL === 'ADMIN' ? attr.customData.styleAdmin : attr.customData.styleManager]"
-            @click="deleteEvent(attr.key)">
+            @click="deleteEvent(attr.customData)">
             {{ attr.customData.title }}
           </p>
         </div>

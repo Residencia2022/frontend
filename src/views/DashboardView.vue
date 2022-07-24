@@ -172,15 +172,17 @@ export default {
         const month = parseInt(date[1]) - 1
         const day = parseInt(date[2])
         return {
-          key: event.ID_CALENDAR,
+          key: parseInt(`${event.ID_PRODUCT_LINE}${event.ID_SCHEDULE}${event.ID_CALENDAR}`),
           customData: {
             styleAdmin: this.productStyles[event.ID_PRODUCT_LINE - 1],
             styleManager: this.eventStyles[event.ID_SCHEDULE - 1],
+            id: event.ID_CALENDAR,
             line: event.ID_PRODUCT_LINE,
             lineName: event.PRODUCT_LINE,
             schedule: event.ID_SCHEDULE,
             scheduleName: event.LABEL,
-            hours: event.START_TIME ? `${event.START_TIME} - ${event.END_TIME}` : '',
+            start: event.START_TIME,
+            end: event.END_TIME,
             title: event.EMPLOYEE
           },
           dates: new Date(year, month, day)

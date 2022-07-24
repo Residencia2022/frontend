@@ -11,7 +11,8 @@
       <button-logout />
     </div>
   </div>
-  <menu-content class="position-fixed top-0 start-0 min-vh-100" desktop :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
+  <menu-content class="position-fixed top-0 start-0 min-vh-100" desktop :pages="pages" :pageSelected="pageSelected"
+    :setSelected="setSelected" />
 </template>
 
 <script>

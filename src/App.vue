@@ -57,23 +57,47 @@ main.row {
   background-color: var(--wireless-color) !important;
 }
 
+.card.bg-wireless:hover {
+  box-shadow: 0px 0px 20px 15px rgba(12, 174, 197, 0.25) !important;
+}
+
 .bg-fixed {
   background-color: var(--fixed-color) !important;
+}
+
+.card.bg-fixed:hover {
+  box-shadow: 0px 0px 20px 15px rgba(193, 39, 67, 0.25) !important;
 }
 
 .bg-it {
   background-color: var(--it-color) !important;
 }
 
+.card.bg-it:hover {
+  box-shadow: 0px 0px 20px 15px rgba(23, 110, 191, 0.25) !important;
+}
+
 .bg-core {
   background-color: var(--core-color) !important;
+}
+
+.card.bg-core:hover {
+  box-shadow: 0px 0px 20px 15px rgba(255, 62, 48, 0.25) !important;
 }
 
 .bg-app {
   background-color: var(--app-color) !important;
 }
 
+.card.bg-app:hover {
+  box-shadow: 0px 0px 20px 15px rgba(247, 181, 41, 0.25) !important;
+}
+
 .bg-remote {
   background-color: var(--remote-color) !important;
+}
+
+.card.bg-remote:hover {
+  box-shadow: 0px 0px 20px 15px rgba(23, 156, 82, 0.25) !important;
 }
 </style>

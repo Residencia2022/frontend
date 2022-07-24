@@ -50,8 +50,4 @@ export default {
   border-radius: 30px !important;
   transition: box-shadow 0.3s ease-in-out;
 }
-
-.card:hover {
-  box-shadow: 0px 0px 20px 15px rgba(48, 161, 173, 0.25);
-}
 </style>

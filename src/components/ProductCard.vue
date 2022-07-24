@@ -1,5 +1,6 @@
 <template>
-  <div v-for="(product, index) in products" :key="index" :class="['card col col-12 col-md-5 col-lg-3', styles[index]]">
+  <div v-for="(product, index) in products" :key="index" :class="['card col col-12 col-md-5 col-lg-3', styles[index]]"
+    @click="goToCalendar(product.ID_PRODUCT_LINE)">
     <i :class="['fa-solid p-4 fs-1 position-absolute bottom-0 end-0 text-white', icons[index]]"></i>
     <div class="card-body">
       <h3 class="card-title p-3 text-white">
@@ -24,6 +25,20 @@ export default {
     icons: {
       type: Array,
       required: true
+    },
+    setSelected: {
+      type: Function,
+      default: () => {}
+    },
+    setFilter: {
+      type: Function,
+      default: () => {}
+    }
+  },
+  methods: {
+    goToCalendar (line) {
+      this.setSelected(3)
+      this.setFilter(line)
     }
   }
 }

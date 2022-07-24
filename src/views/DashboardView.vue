@@ -4,20 +4,21 @@
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-  <main class="row" v-else>
+  <main class="row justify-content-end" v-else>
     <menu-container :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
     <section class="col col-12 col-md-9 col-xl-10 p-5">
       <dashboard-header :user="user.FIRST_NAME" :title="pages[pageSelected].title"
         :subtitle="pages[pageSelected].subtitle" />
       <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'home'">
-        <product-card :products="products" :styles="productStyles" :icons="productIcons" />
+        <product-card :products="products" :styles="productStyles" :icons="productIcons" :setSelected="setSelected"
+          :setFilter="setFilter" />
       </article>
       <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'users'">
         <manager-card :users="users" />
       </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="pages[pageSelected].title === 'calendar'">
         <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-if="user.ROL === 'ADMIN'">
-          <filter-list admin :data="products" :styles="productStyles" :filterBy="filterEventsBy" :filter="setFilter" />
+          <filter-list admin :data="products" :styles="productStyles" :filter="eventFilter" :setFilter="setFilter" />
         </div>
         <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-else>
           <!-- <filter-list :data="products" :styles="productStyles" /> -->
@@ -108,7 +109,7 @@ export default {
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
       attributes: [],
-      filterEventsBy: 0,
+      eventFilter: 0,
       isLoading: true
     }
   },
@@ -148,7 +149,7 @@ export default {
     console.timeEnd('Dashboard loaded in:')
   },
   watch: {
-    filterEventsBy: {
+    eventFilter: {
       handler () {
         this.filterEvents()
       },
@@ -160,19 +161,12 @@ export default {
       this.pageSelected = index
     },
     setFilter (line) {
-      this.filterEventsBy = line
+      this.eventFilter = line
     },
     async getCalendarEvents () {
       // const events = await CalendarService.getCalendarByMonth(this.year, this.month)
       const events = await CalendarService.getCalendar()
       this.events = events.data.map(event => {
-        let style = ''
-        const { ROL } = this.user
-        if (ROL === 'ADMIN') {
-          style = this.productStyles[event.ID_PRODUCT_LINE - 1]
-        } else {
-          style = this.eventStyles[event.ID_SCHEDULE - 1]
-        }
         const date = event.DATES.split('T')[0].split('-')
         const year = parseInt(date[0])
         const month = parseInt(date[1]) - 1
@@ -180,8 +174,13 @@ export default {
         return {
           key: event.ID_CALENDAR,
           customData: {
-            class: style,
+            styleAdmin: this.productStyles[event.ID_PRODUCT_LINE - 1],
+            styleManager: this.eventStyles[event.ID_SCHEDULE - 1],
             line: event.ID_PRODUCT_LINE,
+            lineName: event.PRODUCT_LINE,
+            schedule: event.ID_SCHEDULE,
+            scheduleName: event.LABEL,
+            hours: event.START_TIME ? `${event.START_TIME} - ${event.END_TIME}` : '',
             title: event.EMPLOYEE
           },
           dates: new Date(year, month, day)
@@ -193,8 +192,8 @@ export default {
       const { ID_PRODUCT_LINE } = this.user
       if (ID_PRODUCT_LINE) {
         this.attributes = this.events.filter(event => event.customData.line === ID_PRODUCT_LINE)
-      } else if (this.filterEventsBy) {
-        this.attributes = this.events.filter(event => event.customData.line === this.filterEventsBy)
+      } else if (this.eventFilter) {
+        this.attributes = this.events.filter(event => event.customData.line === this.eventFilter)
       } else {
         this.attributes = this.events
       }

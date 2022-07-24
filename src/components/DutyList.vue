@@ -4,7 +4,8 @@
       <div class="d-flex flex-column">
         <span class="fs-3 bg-light" @click="createEvent(day.id)">{{ day.day }}</span>
         <div class="fs-6 text-white">
-          <p v-for="attr in attributes" :key="attr.key" :class="['rounded p-1 m-1', attr.customData.class]"
+          <p v-for="attr in attributes" :key="attr.key"
+            :class="['rounded p-1 m-1', user.ROL === 'ADMIN' ? attr.customData.styleAdmin : attr.customData.styleManager]"
             @click="deleteEvent(attr.key)">
             {{ attr.customData.title }}
           </p>

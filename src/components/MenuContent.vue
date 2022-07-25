@@ -5,7 +5,7 @@
       <image-logo v-if="desktop" />
       <button v-for="(page, index) in pages" :key="index"
         :class="['nav-link btn text-dark text-start py-3 fs-5', pageSelected === index ? 'active' : '']"
-        @click="setSelected(index)">
+        @click="setPageSelected(index)">
         <i :class="`fa-solid ${page.icon} me-3`"></i> {{ page.title }}
       </button>
     </nav>
@@ -27,18 +27,19 @@ export default {
     desktop: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    pages () {
+      return this.$store.getters.getPages
     },
-    pages: {
-      type: Array,
-      default: () => []
-    },
-    pageSelected: {
-      type: Number,
-      default: 0
-    },
-    setSelected: {
-      type: Function,
-      default: () => {}
+    pageSelected () {
+      return this.$store.getters.getPageSelected
+    }
+  },
+  methods: {
+    setPageSelected (index) {
+      this.$store.commit('setPageSelected', index)
     }
   }
 }

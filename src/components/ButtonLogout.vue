@@ -9,6 +9,9 @@ export default {
   name: 'ButtonLogout',
   methods: {
     logout () {
+      this.$store.commit('setIdProductLine', null)
+      this.$store.commit('setIsAdmin', false)
+      this.$store.commit('setToken', '')
       this.$store.commit('setUser', {})
       localStorage.removeItem('user')
       this.$router.push('/login')

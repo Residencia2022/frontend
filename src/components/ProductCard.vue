@@ -17,28 +17,29 @@ export default {
     products: {
       type: Array,
       required: true
-    },
-    styles: {
-      type: Array,
-      required: true
-    },
-    icons: {
-      type: Array,
-      required: true
-    },
-    setSelected: {
-      type: Function,
-      default: () => {}
-    },
-    setFilter: {
-      type: Function,
-      default: () => {}
+    }
+  },
+  data () {
+    return {
+      icons: [
+        'fa-tower-cell',
+        'fa-arrow-right-to-city',
+        'fa-server',
+        'fa-cloud',
+        'fa-file-code',
+        'fa-caravan'
+      ]
+    }
+  },
+  computed: {
+    styles () {
+      return this.$store.getters.getProductLineStyles
     }
   },
   methods: {
     goToCalendar (line) {
-      this.setSelected(3)
-      this.setFilter(line)
+      this.$store.commit('setPageSelected', 3)
+      this.$store.commit('setEventFilter', line)
     }
   }
 }

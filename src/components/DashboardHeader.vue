@@ -8,10 +8,10 @@
         </button>
         <div class="text-start d-none d-md-block">
           <h3 class="text-capitalize">
-            {{ title }}
+            {{ pages[pageSelected].title }}
           </h3>
           <h5>
-            {{ subtitle }}
+            {{ pages[pageSelected].subtitle }}
           </h5>
         </div>
       </div>
@@ -34,19 +34,19 @@ export default {
     user: {
       type: String,
       default: 'User'
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    subtitle: {
-      type: String,
-      required: true
     }
   },
   data () {
     return {
       date: new Date().toDateString().split(' ').splice(0, 4).join(' ')
+    }
+  },
+  computed: {
+    pages () {
+      return this.$store.getters.getPages
+    },
+    pageSelected () {
+      return this.$store.getters.getPageSelected
     }
   }
 }

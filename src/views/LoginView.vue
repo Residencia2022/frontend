@@ -48,7 +48,11 @@ export default {
   },
   mounted () {
     if (localStorage.getItem('user')) {
-      this.$store.commit('setUser', JSON.parse(localStorage.getItem('user')))
+      const user = JSON.parse(localStorage.getItem('user'))
+      this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
+      this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
+      this.$store.commit('setToken', user.TOKEN)
+      this.$store.commit('setUser', user)
       this.$router.push('/dashboard')
     }
   },
@@ -56,9 +60,13 @@ export default {
     async login () {
       try {
         const response = await LoginService.login(this.email, this.password)
-        this.$store.commit('setUser', response.data)
+        const user = response.data
+        this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
+        this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
+        this.$store.commit('setToken', user.TOKEN)
+        this.$store.commit('setUser', user)
         if (this.remember) {
-          localStorage.setItem('user', JSON.stringify(response.data))
+          localStorage.setItem('user', JSON.stringify(user))
         }
         this.$router.push('/dashboard')
       } catch (error) {

@@ -5,25 +5,20 @@
     </div>
   </div>
   <main class="row justify-content-end" v-else>
-    <menu-container :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
+    <menu-container />
     <section class="col col-12 col-md-9 col-xl-10 p-5">
-      <dashboard-header :user="user.FIRST_NAME" :title="pages[pageSelected].title"
-        :subtitle="pages[pageSelected].subtitle" />
+      <dashboard-header :user="user.FIRST_NAME" />
       <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'home'">
-        <product-card :products="products" :styles="productStyles" :icons="productIcons" :setSelected="setSelected"
-          :setFilter="setFilter" />
+        <product-card :products="products" />
       </article>
       <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'users'">
         <manager-card :users="users" />
       </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="pages[pageSelected].title === 'calendar'">
-        <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-if="user.ROL === 'ADMIN'">
-          <filter-list admin :data="products" :styles="productStyles" :filter="eventFilter" :setFilter="setFilter" />
+        <div class="col col-12 col-md-9 col-lg-6 col-xxl-3">
+          <filter-list :data="products" />
         </div>
-        <div class="col col-12 col-md-9 col-lg-6 col-xxl-3" v-else>
-          <!-- <filter-list :data="products" :styles="productStyles" /> -->
-        </div>
-        <duty-list :attributes="attributes" :user="user" />
+        <duty-list :attributes="attributes" />
       </article>
     </section>
   </main>
@@ -55,94 +50,84 @@ export default {
   },
   data () {
     return {
-      user: {},
-      pages: [
-        {
-          title: 'home',
-          subtitle: 'Product Lines',
-          icon: 'fa-house'
-        },
-        {
-          title: 'users',
-          subtitle: 'Product Line Managers',
-          icon: 'fa-users'
-        },
-        {
-          title: 'interns',
-          subtitle: 'Postulate List',
-          icon: 'fa-user-graduate'
-        },
-        {
-          title: 'calendar',
-          subtitle: 'Engineers',
-          icon: 'fa-calendar'
-        }
-      ],
-      pageSelected: 0,
-      products: [],
-      productStyles: [
-        'bg-wireless',
-        'bg-fixed',
-        'bg-it',
-        'bg-core',
-        'bg-app',
-        'bg-remote'
-      ],
-      productIcons: [
-        'fa-tower-cell',
-        'fa-arrow-right-to-city',
-        'fa-server',
-        'fa-cloud',
-        'fa-file-code',
-        'fa-caravan'
-      ],
-      users: [],
-      interns: [],
-      events: [],
-      eventStyles: [
-        'bg-primary',
-        'bg-success',
-        'bg-warning',
-        'bg-danger'
-      ],
-      schedules: [],
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
       attributes: [],
-      eventFilter: 0,
-      isLoading: true
+      events: [],
+      interns: [],
+      isLoading: true,
+      products: [],
+      schedules: [],
+      users: []
+    }
+  },
+  computed: {
+    eventFilter () {
+      return this.$store.getters.getEventFilter
+    },
+    eventStyles () {
+      return this.$store.getters.getEventStyles
+    },
+    idProductLine () {
+      return this.$store.getters.getIdProductLine
+    },
+    isAdmin () {
+      return this.$store.getters.getIsAdmin
+    },
+    pages () {
+      return this.$store.getters.getPages
+    },
+    pageSelected () {
+      return this.$store.getters.getPageSelected
+    },
+    productLineStyles () {
+      return this.$store.getters.getProductLineStyles
+    },
+    token () {
+      return this.$store.getters.getToken
+    },
+    user () {
+      return this.$store.getters.getUser
     }
   },
   async mounted () {
     console.time('Dashboard loaded in:')
-    this.user = this.$store.getters.getUser
+    const values = []
     try {
-      const { TOKEN } = this.user
-      CalendarService.setToken(TOKEN)
-      await this.getCalendarEvents()
-      SchedulesService.setToken(TOKEN)
-      const schedules = await SchedulesService.getSchedules()
-      this.schedules = schedules.data
-      const { ROL } = this.user
-      if (ROL === 'MANAGER') {
-        this.pages.splice(0, 3)
+      CalendarService.setToken(this.token)
+      values.push(this.getCalendarEvents())
+      SchedulesService.setToken(this.token)
+      values.push(SchedulesService.getSchedules())
+      if (!this.isAdmin) {
+        this.$store.commit('setPages', [this.pages.pop()])
+        const results = await Promise.all(values)
+        this.schedules = results[1].data
       } else {
-        InternsService.setToken(TOKEN)
-        const interns = await InternsService.getInterns()
-        this.interns = interns.data
-        ProductsService.setToken(TOKEN)
-        const products = await ProductsService.getProducts()
-        this.products = products.data
-        UsersService.setToken(TOKEN)
-        const users = await UsersService.getUsers()
-        this.users = users.data
+        InternsService.setToken(this.token)
+        values.push(InternsService.getInterns())
+        ProductsService.setToken(this.token)
+        values.push(ProductsService.getProducts())
+        UsersService.setToken(this.token)
+        values.push(UsersService.getUsers())
+        const results = await Promise.all(values)
+        this.schedules = results[1].data
+        this.interns = results[2].data
+        this.products = results[3].data
+        this.users = results[4].data
       }
     } catch (error) {
-      this.$swal.fire({
-        title: 'Error',
-        text: error.response.data.error || 'Something went wrong',
-        icon: 'error'
-      })
+      if (error.response.data.error) {
+        this.$swal.fire({
+          title: 'Error',
+          text: error.response.data.error,
+          icon: 'error'
+        })
+      } else {
+        console.error(error)
+        this.$swal.fire({
+          title: 'Error',
+          text: 'Something went wrong',
+          icon: 'error'
+        })
+      }
     } finally {
       this.isLoading = false
     }
@@ -157,14 +142,7 @@ export default {
     }
   },
   methods: {
-    setSelected (index) {
-      this.pageSelected = index
-    },
-    setFilter (line) {
-      this.eventFilter = line
-    },
     async getCalendarEvents () {
-      // const events = await CalendarService.getCalendarByMonth(this.year, this.month)
       const events = await CalendarService.getCalendar()
       this.events = events.data.map(event => {
         const date = event.DATES.split('T')[0].split('-')
@@ -174,7 +152,7 @@ export default {
         return {
           key: parseInt(`${event.ID_PRODUCT_LINE}${event.ID_SCHEDULE}${event.ID_CALENDAR}`),
           customData: {
-            styleAdmin: this.productStyles[event.ID_PRODUCT_LINE - 1],
+            styleAdmin: this.productLineStyles[event.ID_PRODUCT_LINE - 1],
             styleManager: this.eventStyles[event.ID_SCHEDULE - 1],
             id: event.ID_CALENDAR,
             line: event.ID_PRODUCT_LINE,
@@ -191,9 +169,8 @@ export default {
       this.filterEvents()
     },
     filterEvents () {
-      const { ID_PRODUCT_LINE } = this.user
-      if (ID_PRODUCT_LINE) {
-        this.attributes = this.events.filter(event => event.customData.line === ID_PRODUCT_LINE)
+      if (this.idProductLine) {
+        this.attributes = this.events.filter(event => event.customData.line === this.idProductLine)
       } else if (this.eventFilter) {
         this.attributes = this.events.filter(event => event.customData.line === this.eventFilter)
       } else {

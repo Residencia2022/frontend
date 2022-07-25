@@ -5,7 +5,7 @@
         <span class="fs-3 bg-light" @click="createEvent(day.id)">{{ day.day }}</span>
         <div class="fs-6 text-white">
           <p v-for="attr in attributes" :key="attr.key"
-            :class="['rounded p-1 m-1', user.ROL === 'ADMIN' ? attr.customData.styleAdmin : attr.customData.styleManager]"
+            :class="['rounded p-1 m-1', isAdmin ? attr.customData.styleAdmin : attr.customData.styleManager]"
             @click="deleteEvent(attr.customData)">
             {{ attr.customData.title }}
           </p>
@@ -19,13 +19,17 @@
 export default {
   name: 'DutyList',
   props: {
-    user: {
-      type: Object,
-      required: true
-    },
     attributes: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    isAdmin () {
+      return this.$store.getters.getIsAdmin
+    },
+    user () {
+      return this.$store.getters.getUser
     }
   },
   methods: {

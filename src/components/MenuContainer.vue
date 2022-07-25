@@ -7,12 +7,11 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <menu-content :pages="pages" :pageSelected="pageSelected" :setSelected="setSelected" />
+      <menu-content />
       <button-logout />
     </div>
   </div>
-  <menu-content class="position-fixed top-0 start-0 min-vh-100" desktop :pages="pages" :pageSelected="pageSelected"
-    :setSelected="setSelected" />
+  <menu-content class="position-fixed top-0 start-0 min-vh-100" desktop />
 </template>
 
 <script>
@@ -26,20 +25,6 @@ export default {
     ButtonLogout,
     ImageLogo,
     MenuContent
-  },
-  props: {
-    pages: {
-      type: Array,
-      default: () => []
-    },
-    pageSelected: {
-      type: Number,
-      default: 0
-    },
-    setSelected: {
-      type: Function,
-      default: () => {}
-    }
   }
 }
 </script>

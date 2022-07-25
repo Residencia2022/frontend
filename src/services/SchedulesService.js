@@ -5,7 +5,7 @@ class SchedulesService {
     http.defaults.headers.common.token = `${token}`
   }
 
-  async getSchedules () {
+  async getAll () {
     const response = await http.get('/api/schedules')
     return response.data
   }

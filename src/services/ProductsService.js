@@ -5,7 +5,7 @@ class ProductsService {
     http.defaults.headers.common.token = `${token}`
   }
 
-  async getProducts () {
+  async getAll () {
     const response = await http.get('/api/products')
     return response.data
   }

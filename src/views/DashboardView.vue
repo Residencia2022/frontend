@@ -95,18 +95,18 @@ export default {
       CalendarService.setToken(this.token)
       values.push(this.getCalendarEvents())
       SchedulesService.setToken(this.token)
-      values.push(SchedulesService.getSchedules())
+      values.push(SchedulesService.getAll())
       if (!this.isAdmin) {
         this.$store.commit('setPages', [this.pages.pop()])
         const results = await Promise.all(values)
         this.schedules = results[1].data
       } else {
         InternsService.setToken(this.token)
-        values.push(InternsService.getInterns())
+        values.push(InternsService.getAll())
         ProductsService.setToken(this.token)
-        values.push(ProductsService.getProducts())
+        values.push(ProductsService.getAll())
         UsersService.setToken(this.token)
-        values.push(UsersService.getUsers())
+        values.push(UsersService.getAll())
         const results = await Promise.all(values)
         this.schedules = results[1].data
         this.interns = results[2].data
@@ -143,27 +143,15 @@ export default {
   },
   methods: {
     async getCalendarEvents () {
-      const events = await CalendarService.getCalendar()
-      this.events = events.data.map(event => {
-        const date = event.DATES.split('T')[0].split('-')
-        const year = parseInt(date[0])
-        const month = parseInt(date[1]) - 1
-        const day = parseInt(date[2])
+      const events = await CalendarService.getAll()
+      this.events = events.map(event => {
         return {
-          key: parseInt(`${event.ID_PRODUCT_LINE}${event.ID_SCHEDULE}${event.ID_CALENDAR}`),
+          ...event,
           customData: {
-            styleAdmin: this.productLineStyles[event.ID_PRODUCT_LINE - 1],
-            styleManager: this.eventStyles[event.ID_SCHEDULE - 1],
-            id: event.ID_CALENDAR,
-            line: event.ID_PRODUCT_LINE,
-            lineName: event.PRODUCT_LINE,
-            schedule: event.ID_SCHEDULE,
-            scheduleName: event.LABEL,
-            start: event.START_TIME,
-            end: event.END_TIME,
-            title: event.EMPLOYEE
-          },
-          dates: new Date(year, month, day)
+            ...event.customData,
+            styleAdmin: this.productLineStyles[event.customData.line - 1],
+            styleManager: this.eventStyles[event.customData.schedule - 1]
+          }
         }
       })
       this.filterEvents()

@@ -5,7 +5,7 @@ class PositionsService {
     http.defaults.headers.common.token = `${token}`
   }
 
-  async getPositions () {
+  async getAll () {
     const response = await http.get('/api/positions')
     return response.data
   }

@@ -5,7 +5,7 @@ class UsersService {
     http.defaults.headers.common.token = `${token}`
   }
 
-  async getUsers () {
+  async getAll () {
     const response = await http.get('/api/users')
     return response.data
   }

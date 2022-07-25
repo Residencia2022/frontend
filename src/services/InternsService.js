@@ -5,7 +5,7 @@ class InternsService {
     http.defaults.headers.common.token = `${token}`
   }
 
-  async getInterns () {
+  async getAll () {
     const response = await http.get('/api/interns')
     return response.data
   }

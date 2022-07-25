@@ -6,7 +6,7 @@ export default createStore({
     eventStyles: ['bg-primary', 'bg-success', 'bg-warning', 'bg-danger'],
     idProductLine: null,
     isAdmin: false,
-    pages: [
+    menuItems: [
       {
         title: 'home',
         subtitle: 'Product Lines',
@@ -28,7 +28,7 @@ export default createStore({
         icon: 'fa-calendar'
       }
     ],
-    pageSelected: 0,
+    menuItemSelected: 0,
     productLineStyles: [
       'bg-wireless',
       'bg-fixed',
@@ -45,8 +45,8 @@ export default createStore({
     getEventStyles: (state) => state.eventStyles,
     getIdProductLine: (state) => state.idProductLine,
     getIsAdmin: (state) => state.isAdmin,
-    getPages: (state) => state.pages,
-    getPageSelected: (state) => state.pageSelected,
+    getMenuItems: (state) => state.menuItems,
+    getMenuItemSelected: (state) => state.menuItemSelected,
     getProductLineStyles: (state) => state.productLineStyles,
     getToken: (state) => state.token,
     getUser: (state) => state.user
@@ -61,11 +61,11 @@ export default createStore({
     setIsAdmin: (state, isAdmin) => {
       state.isAdmin = isAdmin
     },
-    setPages: (state, pages) => {
-      state.pages = pages
+    setMenuItems: (state, menuItems) => {
+      state.menuItems = menuItems
     },
-    setPageSelected: (state, pageSelected) => {
-      state.pageSelected = pageSelected
+    setMenuItemSelected: (state, menuItemSelected) => {
+      state.menuItemSelected = menuItemSelected
     },
     setToken: (state, token) => {
       state.token = token

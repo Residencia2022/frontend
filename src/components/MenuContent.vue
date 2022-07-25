@@ -3,9 +3,9 @@
     :class="[desktop ? 'col col-md-3 col-xl-2 pe-0 bg-huawei d-none d-md-flex flex-column justify-content-between' : '']">
     <nav class="nav flex-column">
       <image-logo v-if="desktop" />
-      <button v-for="(page, index) in pages" :key="index"
-        :class="['nav-link btn text-dark text-start py-3 fs-5', pageSelected === index ? 'active' : '']"
-        @click="setPageSelected(index)">
+      <button v-for="(page, index) in menuItems" :key="index"
+        :class="['nav-link btn text-dark text-start py-3 fs-5', menuItemSelected === index ? 'active' : '']"
+        @click="setMenuItemSelected(index)">
         <i :class="`fa-solid ${page.icon} me-3`"></i> {{ page.title }}
       </button>
     </nav>
@@ -30,16 +30,16 @@ export default {
     }
   },
   computed: {
-    pages () {
-      return this.$store.getters.getPages
+    menuItems () {
+      return this.$store.getters.getMenuItems
     },
-    pageSelected () {
-      return this.$store.getters.getPageSelected
+    menuItemSelected () {
+      return this.$store.getters.getMenuItemSelected
     }
   },
   methods: {
-    setPageSelected (index) {
-      this.$store.commit('setPageSelected', index)
+    setMenuItemSelected (index) {
+      this.$store.commit('setMenuItemSelected', index)
     }
   }
 }

@@ -7,7 +7,7 @@ class SchedulesService {
 
   async getAll () {
     const response = await http.get('/api/schedules')
-    return response.data
+    return response.data.data
   }
 }
 

@@ -7,7 +7,7 @@ class InternsService {
 
   async getAll () {
     const response = await http.get('/api/interns')
-    return response.data
+    return response.data.data
   }
 }
 

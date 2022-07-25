@@ -8,16 +8,16 @@
         </button>
         <div class="text-start d-none d-md-block">
           <h3 class="text-capitalize">
-            {{ pages[pageSelected].title }}
+            {{ menuItems[menuItemSelected].title }}
           </h3>
           <h5>
-            {{ pages[pageSelected].subtitle }}
+            {{ menuItems[menuItemSelected].subtitle }}
           </h5>
         </div>
       </div>
       <div class="col col-9 col-md-6">
         <h5>
-          Hello, {{ user }}. 🖐️
+          Hello, {{ username }}. 🖐️
         </h5>
         <h6>
           {{ date }}
@@ -31,7 +31,7 @@
 export default {
   name: 'DashboardHeader',
   props: {
-    user: {
+    username: {
       type: String,
       default: 'User'
     }
@@ -42,11 +42,11 @@ export default {
     }
   },
   computed: {
-    pages () {
-      return this.$store.getters.getPages
+    menuItems () {
+      return this.$store.getters.getMenuItems
     },
-    pageSelected () {
-      return this.$store.getters.getPageSelected
+    menuItemSelected () {
+      return this.$store.getters.getMenuItemSelected
     }
   }
 }

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     goToCalendar (line) {
-      this.$store.commit('setPageSelected', 3)
+      this.$store.commit('setMenuItemSelected', 3)
       this.$store.commit('setEventFilter', line)
     }
   }

@@ -59,8 +59,7 @@ export default {
   methods: {
     async login () {
       try {
-        const response = await LoginService.login(this.email, this.password)
-        const user = response.data
+        const user = await LoginService.login(this.email, this.password)
         this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
         this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
         this.$store.commit('setToken', user.TOKEN)
@@ -70,11 +69,20 @@ export default {
         }
         this.$router.push('/dashboard')
       } catch (error) {
-        this.$swal.fire({
-          title: 'Error',
-          text: error.response.data.error || 'Something went wrong',
-          icon: 'error'
-        })
+        if (error.response.data.error) {
+          this.$swal.fire({
+            title: 'Error',
+            text: error.response.data.error,
+            icon: 'error'
+          })
+        } else {
+          console.error(error)
+          this.$swal.fire({
+            title: 'Error',
+            text: 'Something went wrong',
+            icon: 'error'
+          })
+        }
       }
     }
   }

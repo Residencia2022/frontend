@@ -7,14 +7,14 @@
   <main class="row justify-content-end" v-else>
     <menu-container />
     <section class="col col-12 col-md-9 col-xl-10 p-5">
-      <dashboard-header :user="user.FIRST_NAME" />
-      <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'home'">
+      <dashboard-header :username="user.FIRST_NAME" />
+      <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'home'">
         <product-card :products="products" />
       </article>
-      <article class="row justify-content-center gap-5 mt-5" v-if="pages[pageSelected].title === 'users'">
+      <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'users'">
         <manager-card :users="users" />
       </article>
-      <article class="row flex-xxl-row-reverse mt-5" v-if="pages[pageSelected].title === 'calendar'">
+      <article class="row flex-xxl-row-reverse mt-5" v-if="menuItems[menuItemSelected].title === 'calendar'">
         <div class="col col-12 col-md-9 col-lg-6 col-xxl-3">
           <filter-list :data="products" />
         </div>
@@ -72,11 +72,11 @@ export default {
     isAdmin () {
       return this.$store.getters.getIsAdmin
     },
-    pages () {
-      return this.$store.getters.getPages
+    menuItems () {
+      return this.$store.getters.getMenuItems
     },
-    pageSelected () {
-      return this.$store.getters.getPageSelected
+    menuItemSelected () {
+      return this.$store.getters.getMenuItemSelected
     },
     productLineStyles () {
       return this.$store.getters.getProductLineStyles
@@ -97,9 +97,9 @@ export default {
       SchedulesService.setToken(this.token)
       values.push(SchedulesService.getAll())
       if (!this.isAdmin) {
-        this.$store.commit('setPages', [this.pages.pop()])
+        this.$store.commit('setMenuItems', [this.menuItems.pop()])
         const results = await Promise.all(values)
-        this.schedules = results[1].data
+        this.schedules = results[1]
       } else {
         InternsService.setToken(this.token)
         values.push(InternsService.getAll())
@@ -108,10 +108,10 @@ export default {
         UsersService.setToken(this.token)
         values.push(UsersService.getAll())
         const results = await Promise.all(values)
-        this.schedules = results[1].data
-        this.interns = results[2].data
-        this.products = results[3].data
-        this.users = results[4].data
+        this.schedules = results[1]
+        this.interns = results[2]
+        this.products = results[3]
+        this.users = results[4]
       }
     } catch (error) {
       if (error.response.data.error) {
@@ -170,5 +170,4 @@ export default {
 </script>
 
 <style>
-
 </style>

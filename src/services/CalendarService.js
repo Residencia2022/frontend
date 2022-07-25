@@ -34,7 +34,7 @@ class CalendarService {
   async getByMonth (year, month) {
     month = month.toString().padStart(2, '0')
     const response = await http.get(`/api/calendar/${year}/${month}`)
-    return response.data
+    return response.data.data
   }
 }
 

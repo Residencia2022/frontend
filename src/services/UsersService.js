@@ -7,7 +7,7 @@ class UsersService {
 
   async getAll () {
     const response = await http.get('/api/users')
-    return response.data
+    return response.data.data
   }
 }
 

@@ -50,7 +50,7 @@ main.row {
 }
 
 .bg-huawei {
-  background: linear-gradient(180deg, rgba(248, 175, 151, 0.3) 0%, rgba(154, 8, 13, 0.3) 96.13%);
+  background: linear-gradient(180deg, #fde7df 0%, #e1b4b6 90%);
 }
 
 .bg-wireless {

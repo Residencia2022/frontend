@@ -15,8 +15,8 @@
         <manager-card :users="users" />
       </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="menuItems[menuItemSelected].title === 'calendar'">
-        <div class="col col-12 col-md-9 col-lg-6 col-xxl-3">
-          <filter-list :data="products" />
+        <div class="col col-12 col-xxl-3 pb-5 pt-0">
+          <filter-list :products="products" :schedules="schedules" />
         </div>
         <duty-list :attributes="attributes" />
       </article>

@@ -1,38 +1,57 @@
 <template>
-  <form class="form-group bg-light d-grid mb-5 ms-xxl-4 p-5 rounded shadow-sm" v-if="isAdmin">
-    <div class="form-check mb-3" v-for="item in data" :key="item.ID_PRODUCT_LINE">
-      <input class="form-check-input" type="radio" name="productLine" :id="`productLine${item.ID_PRODUCT_LINE}`"
-        :checked="item.ID_PRODUCT_LINE === eventFilter" @click="setEventFilter(item.ID_PRODUCT_LINE)">
-      <label class="form-check-label" :for="`productLine${item.ID_PRODUCT_LINE}`">
-        {{ item.PRODUCT_LINE }}
-      </label>
+  <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-1">
+    <div class="p-3" v-if="isAdmin">
+      <form class="form-group bg-light d-grid p-4 rounded shadow-sm">
+        <div class="form-check mb-3" v-for="product in products" :key="product.ID_PRODUCT_LINE">
+          <input class="form-check-input" type="radio" name="productLine" :id="`productLine${product.ID_PRODUCT_LINE}`"
+            :checked="product.ID_PRODUCT_LINE === eventFilter" @click="setEventFilter(product.ID_PRODUCT_LINE)">
+          <label class="form-check-label" :for="`productLine${product.ID_PRODUCT_LINE}`">
+            {{ product.PRODUCT_LINE }}
+          </label>
+        </div>
+        <button type="button" class="btn btn-primary" v-if="eventFilter" @click="setEventFilter(0)">Clear
+          filter</button>
+      </form>
     </div>
-    <button type="button" class="btn btn-primary" v-if="eventFilter" @click="setEventFilter(0)">Clear filter</button>
-  </form>
-  <ul class="list-group p-5" v-else>
-    <li v-for="(item, index) in data" :key="index" :class="['list-group-item text-white', styles[index]]">
-      {{ item.LABEL }}, {{ item.START_TIME }} to {{ item.END_TIME }}
-    </li>
-  </ul>
+    <ul class="list-group pt-3 px-5" v-if="isAdmin && !eventFilter">
+      <li v-for="(product, index) in products" :key="index"
+        :class="['list-group-item text-white', productLineStyles[index]]">
+        {{ product.PRODUCT_LINE }}
+      </li>
+    </ul>
+    <ul class="list-group pt-3 px-5" v-if="!isAdmin || eventFilter">
+      <li v-for="(schedule, index) in schedules" :key="index"
+        :class="['list-group-item text-white', eventStyles[index]]">
+        {{ schedule.LABEL }}{{ schedule.START_TIME ? `, ${schedule.START_TIME} - ${schedule.END_TIME}` : '' }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'FilterList',
   props: {
-    data: {
+    products: {
       type: Array,
-      required: true
+      default: () => []
+    },
+    schedules: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
     eventFilter () {
       return this.$store.getters.getEventFilter
     },
+    eventStyles () {
+      return this.$store.getters.getEventStyles
+    },
     isAdmin () {
       return this.$store.getters.getIsAdmin
     },
-    styles () {
+    productLineStyles () {
       return this.$store.getters.getProductLineStyles
     }
   },

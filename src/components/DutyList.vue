@@ -6,7 +6,7 @@
         <div class="fs-6 text-white">
           <p v-for="attr in attributes" :key="attr.key"
             :class="['rounded p-1 m-1', isAdmin && !eventFilter ? attr.customData.styleAdmin : attr.customData.styleManager]"
-            @click="deleteEvent(attr.customData)">
+            @click="showEvent(attr)">
             {{ attr.customData.title }}
           </p>
         </div>
@@ -16,31 +16,117 @@
 </template>
 
 <script>
+import CalendarService from '@/services/CalendarService'
+
 export default {
   name: 'DutyList',
-  props: {
-    attributes: {
-      type: Array,
-      required: true
+  data () {
+    return {
+      attributes: [],
+      events: []
     }
   },
   computed: {
     eventFilter () {
       return this.$store.getters.getEventFilter
     },
+    eventStyles () {
+      return this.$store.getters.getEventStyles
+    },
+    idProductLine () {
+      return this.$store.getters.getIdProductLine
+    },
     isAdmin () {
       return this.$store.getters.getIsAdmin
+    },
+    productLineStyles () {
+      return this.$store.getters.getProductLineStyles
+    },
+    token () {
+      return this.$store.getters.getToken
     },
     user () {
       return this.$store.getters.getUser
     }
   },
+  watch: {
+    eventFilter: {
+      handler () {
+        this.filterEvents()
+      },
+      immediate: true
+    }
+  },
+  async mounted () {
+    CalendarService.setToken(this.token)
+    await this.getCalendarEvents()
+  },
   methods: {
+    async getCalendarEvents () {
+      const events = await CalendarService.getAll()
+      this.events = events.map(event => {
+        return {
+          ...event,
+          customData: {
+            ...event.customData,
+            styleAdmin: this.productLineStyles[event.customData.line - 1],
+            styleManager: this.eventStyles[event.customData.schedule - 1]
+          }
+        }
+      })
+      this.filterEvents()
+    },
+    filterEvents () {
+      if (this.idProductLine) {
+        this.attributes = this.events.filter(event => event.customData.line === this.idProductLine)
+      } else if (this.eventFilter) {
+        this.attributes = this.events.filter(event => event.customData.line === this.eventFilter)
+      } else {
+        this.attributes = this.events
+      }
+    },
     async createEvent (date) {
       console.log(date)
     },
-    async deleteEvent (event) {
-      console.log(event)
+    showEvent (event) {
+      const hours = event.customData.start ? `${event.customData.start} - ${event.customData.end}` : ''
+      this.$swal.fire({
+        title: event.customData.lineName,
+        html: `
+          <p>Engineer(s): ${event.customData.title}</p>
+          <p>Schedule: ${event.customData.scheduleName}</p>
+          <p>${hours}</p>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Ok',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          CalendarService.deleteEvent(event.customData.id)
+            .then(response => {
+              this.$swal.fire({
+                title: 'Deleted!',
+                text: response,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              })
+                .then(() => {
+                  this.getCalendarEvents()
+                })
+            })
+            .catch(error => {
+              this.$swal.fire({
+                title: 'Error!',
+                text: error.response.data.error,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
+            })
+        }
+      })
     }
   }
 }

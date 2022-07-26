@@ -18,7 +18,7 @@
         <div class="col col-12 col-xxl-3 pb-5 pt-0">
           <filter-list :products="products" :schedules="schedules" />
         </div>
-        <duty-list :attributes="attributes" />
+        <duty-list />
       </article>
     </section>
   </main>
@@ -32,7 +32,6 @@ import ManagerCard from '@/components/ManagerCard.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
-import CalendarService from '@/services/CalendarService'
 import InternsService from '@/services/InternsService'
 import ProductsService from '@/services/ProductsService'
 import SchedulesService from '@/services/SchedulesService'
@@ -50,8 +49,6 @@ export default {
   },
   data () {
     return {
-      attributes: [],
-      events: [],
       interns: [],
       isLoading: true,
       products: [],
@@ -60,15 +57,6 @@ export default {
     }
   },
   computed: {
-    eventFilter () {
-      return this.$store.getters.getEventFilter
-    },
-    eventStyles () {
-      return this.$store.getters.getEventStyles
-    },
-    idProductLine () {
-      return this.$store.getters.getIdProductLine
-    },
     isAdmin () {
       return this.$store.getters.getIsAdmin
     },
@@ -77,9 +65,6 @@ export default {
     },
     menuItemSelected () {
       return this.$store.getters.getMenuItemSelected
-    },
-    productLineStyles () {
-      return this.$store.getters.getProductLineStyles
     },
     token () {
       return this.$store.getters.getToken
@@ -92,14 +77,12 @@ export default {
     console.time('Dashboard loaded in:')
     const values = []
     try {
-      CalendarService.setToken(this.token)
-      values.push(this.getCalendarEvents())
       SchedulesService.setToken(this.token)
       values.push(SchedulesService.getAll())
       if (!this.isAdmin) {
         this.$store.commit('setMenuItems', [this.menuItems.pop()])
         const results = await Promise.all(values)
-        this.schedules = results[1]
+        this.schedules = results[0]
       } else {
         InternsService.setToken(this.token)
         values.push(InternsService.getAll())
@@ -108,10 +91,10 @@ export default {
         UsersService.setToken(this.token)
         values.push(UsersService.getAll())
         const results = await Promise.all(values)
-        this.schedules = results[1]
-        this.interns = results[2]
-        this.products = results[3]
-        this.users = results[4]
+        this.schedules = results[0]
+        this.interns = results[1]
+        this.products = results[2]
+        this.users = results[3]
       }
     } catch (error) {
       if (error.response.data.error) {
@@ -133,39 +116,7 @@ export default {
     }
     console.timeEnd('Dashboard loaded in:')
   },
-  watch: {
-    eventFilter: {
-      handler () {
-        this.filterEvents()
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    async getCalendarEvents () {
-      const events = await CalendarService.getAll()
-      this.events = events.map(event => {
-        return {
-          ...event,
-          customData: {
-            ...event.customData,
-            styleAdmin: this.productLineStyles[event.customData.line - 1],
-            styleManager: this.eventStyles[event.customData.schedule - 1]
-          }
-        }
-      })
-      this.filterEvents()
-    },
-    filterEvents () {
-      if (this.idProductLine) {
-        this.attributes = this.events.filter(event => event.customData.line === this.idProductLine)
-      } else if (this.eventFilter) {
-        this.attributes = this.events.filter(event => event.customData.line === this.eventFilter)
-      } else {
-        this.attributes = this.events
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 

@@ -36,6 +36,11 @@ class CalendarService {
     const response = await http.get(`/api/calendar/${year}/${month}`)
     return response.data.data
   }
+
+  async deleteEvent (id) {
+    const response = await http.delete(`/api/calendar/${id}`)
+    return response.data.data
+  }
 }
 
 export default new CalendarService()

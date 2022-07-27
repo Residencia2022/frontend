@@ -29,9 +29,9 @@ export default {
   data () {
     return {
       attributes: [],
+      employee: '',
       events: [],
-      ID_SCHEDULE: null,
-      EMPLOYEE: ''
+      idSchedule: null
     }
   },
   computed: {
@@ -97,41 +97,42 @@ export default {
       if (this.isAdmin) {
         this.$swal.fire({
           title: 'Error',
-          text: 'You are not allowed to create events, you must be a manager',
+          text: 'Only managers can create events',
           icon: 'error'
         })
         return
       }
-      let combo = '<select class="form-select" id="select"><option selected>Choose a schedule</option>'
+      let combo = '<select class="form-select" id="idSchedule">'
       for (let i = 0; i < this.schedules.length; i++) {
-        combo += `<option value="${this.schedules[i].ID_SCHEDULE}">${this.schedules[i].LABEL}</option>`
+        const { ID_SCHEDULE, LABEL } = this.schedules[i]
+        combo += `<option value="${ID_SCHEDULE}">${LABEL}</option>`
       }
       combo += '</select>'
       this.$swal.fire({
         title: 'Create event',
         html: `
-          <div class="form-group">
+          <div class="form-group p-1">
             <div class="mb-3">
               ${combo}
             </div>
             <div class="mb-3">
-              <input class="form-control" type="text" id="control" placeholder="EMPLOYEE" />
+              <input type="text" id="employee" class="form-control" placeholder="Engineer(s)" />
             </div>
           </div>
         `,
         icon: 'info',
+        confirmButtonText: 'Create',
         showCancelButton: true,
-        focusConfirm: false,
         preConfirm: () => {
-          this.ID_SCHEDULE = document.getElementById('select').value
-          this.EMPLOYEE = document.getElementById('control').value
+          this.idSchedule = document.getElementById('idSchedule').value
+          this.employee = document.getElementById('employee').value
         }
-      }).then(() => {
-        if (this.ID_SCHEDULE && this.EMPLOYEE.length) {
+      }).then(result => {
+        if (result.isConfirmed) {
           CalendarService.createEvent({
             ID_PRODUCT_LINE: this.idProductLine,
-            ID_SCHEDULE: this.ID_SCHEDULE,
-            EMPLOYEE: this.EMPLOYEE,
+            ID_SCHEDULE: this.idSchedule,
+            EMPLOYEE: this.employee,
             DATES: date
           }).then(response => {
             this.$swal.fire({
@@ -140,18 +141,16 @@ export default {
               icon: 'success',
               confirmButtonText: 'Ok'
             })
-              .then(() => {
-                this.getCalendarEvents()
-              })
-          })
-            .catch(error => {
-              this.$swal.fire({
-                title: 'Error!',
-                text: error.response.data.error.toLowerCase().replace(/_/g, ' ').replace(/"/g, ''),
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
+            this.getCalendarEvents()
+          }).catch(error => {
+            console.error(error.response.data.error)
+            this.$swal.fire({
+              title: 'Error!',
+              text: 'Something went wrong, please fill all the fields and try again',
+              icon: 'error',
+              confirmButtonText: 'Ok'
             })
+          })
         }
       })
     },
@@ -160,17 +159,15 @@ export default {
       this.$swal.fire({
         title: event.customData.lineName,
         html: `
-          <p>Engineer(s): ${event.customData.title}</p>
-          <p>Schedule: ${event.customData.scheduleName}</p>
-          <p>${hours}</p>
+          <p>Engineer(s): <b>${event.customData.title}</b></p>
+          <p>Schedule: <b>${event.customData.scheduleName}</b></p>
+          <small>${hours}</small>
         `,
         icon: 'info',
         confirmButtonText: 'Delete',
         cancelButtonText: 'Ok',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6'
-      }).then((result) => {
+        showCancelButton: true
+      }).then(result => {
         if (result.isConfirmed) {
           CalendarService.deleteEvent(event.customData.id)
             .then(response => {
@@ -180,11 +177,8 @@ export default {
                 icon: 'success',
                 confirmButtonText: 'Ok'
               })
-                .then(() => {
-                  this.getCalendarEvents()
-                })
-            })
-            .catch(error => {
+              this.getCalendarEvents()
+            }).catch(error => {
               this.$swal.fire({
                 title: 'Error!',
                 text: error.response.data.error,

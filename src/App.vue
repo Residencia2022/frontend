@@ -19,11 +19,11 @@ main.row {
   margin: 0;
 }
 
-.form-control {
+.form-select, .form-control {
   border-color: var(--red-color) !important;
 }
 
-.form-control:focus {
+.form-select:focus, .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
 }
 

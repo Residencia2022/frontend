@@ -18,7 +18,7 @@
         <div class="col col-12 col-xxl-3 pb-5 pt-0">
           <filter-list :products="products" :schedules="schedules" />
         </div>
-        <duty-list />
+        <duty-list :schedules="schedules" />
       </article>
     </section>
   </main>

@@ -37,6 +37,11 @@ class CalendarService {
     return response.data.data
   }
 
+  async createEvent (event) {
+    const response = await http.post('/api/calendar', event)
+    return response.data.data
+  }
+
   async deleteEvent (id) {
     const response = await http.delete(`/api/calendar/${id}`)
     return response.data.data

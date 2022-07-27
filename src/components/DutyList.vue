@@ -20,10 +20,18 @@ import CalendarService from '@/services/CalendarService'
 
 export default {
   name: 'DutyList',
+  props: {
+    schedules: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       attributes: [],
-      events: []
+      events: [],
+      ID_SCHEDULE: null,
+      EMPLOYEE: ''
     }
   },
   computed: {
@@ -86,7 +94,56 @@ export default {
       }
     },
     async createEvent (date) {
-      console.log(date)
+      let combo = '<select class="form-select" id="select"><option selected>Choose a schedule</option>'
+      for (let i = 0; i < this.schedules.length; i++) {
+        combo += `<option value="${this.schedules[i].ID_SCHEDULE}">${this.schedules[i].LABEL}</option>`
+      }
+      combo += '</select>'
+      this.$swal.fire({
+        title: 'Create event',
+        html: `
+          <div class="form-group">
+            <div class="mb-3">
+              ${combo}
+            </div>
+            <div class="mb-3">
+              <input class="form-control" type="text" id="control" placeholder="EMPLOYEE" />
+            </div>
+          </div>
+        `,
+        icon: 'info',
+        showCancelButton: true,
+        focusConfirm: false,
+        preConfirm: () => {
+          this.ID_SCHEDULE = document.getElementById('select').value
+          this.EMPLOYEE = document.getElementById('control').value
+        }
+      }).then(() => {
+        CalendarService.createEvent({
+          ID_PRODUCT_LINE: this.idProductLine,
+          ID_SCHEDULE: this.ID_SCHEDULE,
+          EMPLOYEE: this.EMPLOYEE,
+          DATES: date
+        }).then(response => {
+          this.$swal.fire({
+            title: 'Created!',
+            text: response,
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+            .then(() => {
+              this.getCalendarEvents()
+            })
+        })
+          .catch(error => {
+            this.$swal.fire({
+              title: 'Error!',
+              text: error.response.data.error.toLowerCase().replace(/_/g, ' ').replace(/"/g, ''),
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
+          })
+      })
     },
     showEvent (event) {
       const hours = event.customData.start ? `${event.customData.start} - ${event.customData.end}` : ''

@@ -94,6 +94,14 @@ export default {
       }
     },
     async createEvent (date) {
+      if (this.isAdmin) {
+        this.$swal.fire({
+          title: 'Error',
+          text: 'You are not allowed to create events, you must be a manager',
+          icon: 'error'
+        })
+        return
+      }
       let combo = '<select class="form-select" id="select"><option selected>Choose a schedule</option>'
       for (let i = 0; i < this.schedules.length; i++) {
         combo += `<option value="${this.schedules[i].ID_SCHEDULE}">${this.schedules[i].LABEL}</option>`

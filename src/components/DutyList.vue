@@ -119,30 +119,32 @@ export default {
           this.EMPLOYEE = document.getElementById('control').value
         }
       }).then(() => {
-        CalendarService.createEvent({
-          ID_PRODUCT_LINE: this.idProductLine,
-          ID_SCHEDULE: this.ID_SCHEDULE,
-          EMPLOYEE: this.EMPLOYEE,
-          DATES: date
-        }).then(response => {
-          this.$swal.fire({
-            title: 'Created!',
-            text: response,
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          })
-            .then(() => {
-              this.getCalendarEvents()
-            })
-        })
-          .catch(error => {
+        if (this.ID_SCHEDULE && this.EMPLOYEE.length) {
+          CalendarService.createEvent({
+            ID_PRODUCT_LINE: this.idProductLine,
+            ID_SCHEDULE: this.ID_SCHEDULE,
+            EMPLOYEE: this.EMPLOYEE,
+            DATES: date
+          }).then(response => {
             this.$swal.fire({
-              title: 'Error!',
-              text: error.response.data.error.toLowerCase().replace(/_/g, ' ').replace(/"/g, ''),
-              icon: 'error',
+              title: 'Created!',
+              text: response,
+              icon: 'success',
               confirmButtonText: 'Ok'
             })
+              .then(() => {
+                this.getCalendarEvents()
+              })
           })
+            .catch(error => {
+              this.$swal.fire({
+                title: 'Error!',
+                text: error.response.data.error.toLowerCase().replace(/_/g, ' ').replace(/"/g, ''),
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
+            })
+        }
       })
     },
     showEvent (event) {

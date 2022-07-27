@@ -138,8 +138,7 @@ export default {
             this.$swal.fire({
               title: 'Created!',
               text: response,
-              icon: 'success',
-              confirmButtonText: 'Ok'
+              icon: 'success'
             })
             this.getCalendarEvents()
           }).catch(error => {
@@ -147,8 +146,7 @@ export default {
             this.$swal.fire({
               title: 'Error!',
               text: 'Something went wrong, please fill all the fields and try again',
-              icon: 'error',
-              confirmButtonText: 'Ok'
+              icon: 'error'
             })
           })
         }
@@ -164,8 +162,8 @@ export default {
           <small>${hours}</small>
         `,
         icon: 'info',
-        confirmButtonText: 'Delete',
         cancelButtonText: 'Ok',
+        confirmButtonText: 'Delete',
         showCancelButton: true
       }).then(result => {
         if (result.isConfirmed) {
@@ -174,16 +172,14 @@ export default {
               this.$swal.fire({
                 title: 'Deleted!',
                 text: response,
-                icon: 'success',
-                confirmButtonText: 'Ok'
+                icon: 'success'
               })
               this.getCalendarEvents()
             }).catch(error => {
               this.$swal.fire({
                 title: 'Error!',
                 text: error.response.data.error,
-                icon: 'error',
-                confirmButtonText: 'Ok'
+                icon: 'error'
               })
             })
         }

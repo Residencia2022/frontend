@@ -40,12 +40,12 @@ main.row {
   box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
 }
 
-.btn-primary {
+.btn-primary, .swal2-confirm {
   border-color: var(--red-color) !important;
   background-color: var(--red-color) !important;
 }
 
-.btn-primary:active, .btn-primary:focus {
+.btn-primary:active, .btn-primary:focus, .swal2-confirm:focus {
   box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
 }
 

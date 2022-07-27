@@ -22,7 +22,7 @@
     <ul class="list-group pt-3 px-5" v-if="!isAdmin || eventFilter">
       <li v-for="(schedule, index) in schedules" :key="index"
         :class="['list-group-item text-white', eventStyles[index]]">
-        {{ schedule.LABEL }}{{ schedule.START_TIME ? `, ${schedule.START_TIME} - ${schedule.END_TIME}` : '' }}
+        {{ schedule.LABEL }} {{ schedule.START_TIME ? `from ${schedule.START_TIME} until ${schedule.END_TIME}` : '' }}
       </li>
     </ul>
   </div>

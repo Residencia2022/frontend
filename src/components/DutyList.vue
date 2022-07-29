@@ -79,8 +79,12 @@ export default {
   },
   methods: {
     async getCalendarEvents () {
-      const events = await CalendarService.getAll()
-      this.events = events.map(event => {
+      if (this.idProductLine) {
+        this.events = await CalendarService.getByLine(this.idProductLine)
+      } else {
+        this.events = await CalendarService.getAll()
+      }
+      this.events = this.events.map(event => {
         return {
           ...event,
           customData: {
@@ -93,9 +97,7 @@ export default {
       this.filterEvents()
     },
     filterEvents () {
-      if (this.idProductLine) {
-        this.attributes = this.events.filter(event => event.customData.line === this.idProductLine)
-      } else if (this.eventFilter) {
+      if (this.eventFilter) {
         this.attributes = this.events.filter(event => event.customData.line === this.eventFilter)
       } else {
         this.attributes = this.events

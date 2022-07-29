@@ -5,9 +5,8 @@ class CalendarService {
     http.defaults.headers.common.token = `${token}`
   }
 
-  async getAll () {
-    const response = await http.get('/api/calendar')
-    return response.data.data.map((event) => {
+  formatEvents (events) {
+    return events.map((event) => {
       const date = event.DATES.split('T')[0].split('-')
       const year = parseInt(date[0])
       const month = parseInt(date[1]) - 1
@@ -31,10 +30,20 @@ class CalendarService {
     })
   }
 
+  async getAll () {
+    const response = await http.get('/api/calendar')
+    return this.formatEvents(response.data.data)
+  }
+
+  async getByLine (line) {
+    const response = await http.get(`/api/calendar/${line}`)
+    return this.formatEvents(response.data.data)
+  }
+
   async getByMonth (year, month) {
     month = month.toString().padStart(2, '0')
     const response = await http.get(`/api/calendar/${year}/${month}`)
-    return response.data.data
+    return this.formatEvents(response.data.data)
   }
 
   async createEvent (event) {

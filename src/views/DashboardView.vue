@@ -74,7 +74,6 @@ export default {
     }
   },
   async mounted () {
-    console.time('Dashboard loaded in:')
     const values = []
     try {
       SchedulesService.setToken(this.token)
@@ -97,24 +96,14 @@ export default {
         this.users = results[3]
       }
     } catch (error) {
-      if (error.response.data.error) {
-        this.$swal.fire({
-          title: 'Error',
-          text: error.response.data.error,
-          icon: 'error'
-        })
-      } else {
-        console.error(error)
-        this.$swal.fire({
-          title: 'Error',
-          text: 'Something went wrong',
-          icon: 'error'
-        })
-      }
+      this.$swal.fire({
+        title: 'Error',
+        text: error.response.data.error,
+        icon: 'error'
+      })
     } finally {
       this.isLoading = false
     }
-    console.timeEnd('Dashboard loaded in:')
   },
   methods: {}
 }

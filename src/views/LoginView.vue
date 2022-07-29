@@ -69,20 +69,11 @@ export default {
         }
         this.$router.push('/dashboard')
       } catch (error) {
-        if (error.response.data.error) {
-          this.$swal.fire({
-            title: 'Error',
-            text: error.response.data.error,
-            icon: 'error'
-          })
-        } else {
-          console.error(error)
-          this.$swal.fire({
-            title: 'Error',
-            text: 'Something went wrong',
-            icon: 'error'
-          })
-        }
+        this.$swal.fire({
+          title: 'Error',
+          text: error.response.data.error,
+          icon: 'error'
+        })
       }
     }
   }

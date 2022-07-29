@@ -66,8 +66,16 @@ export default {
     }
   },
   async mounted () {
-    CalendarService.setToken(this.token)
-    await this.getCalendarEvents()
+    try {
+      CalendarService.setToken(this.token)
+      await this.getCalendarEvents()
+    } catch (error) {
+      this.$swal.fire({
+        title: 'Error!',
+        text: error.response.data.error,
+        icon: 'error'
+      })
+    }
   },
   methods: {
     async getCalendarEvents () {
@@ -93,7 +101,7 @@ export default {
         this.attributes = this.events
       }
     },
-    async createEvent (date) {
+    createEvent (date) {
       if (this.isAdmin) {
         this.$swal.fire({
           title: 'Error',
@@ -116,7 +124,7 @@ export default {
               ${combo}
             </div>
             <div class="mb-3">
-              <input type="text" id="employee" class="form-control" placeholder="Engineer(s)" />
+              <input type="text" id="employee" class="form-control" placeholder="Employee(s)" />
             </div>
           </div>
         `,
@@ -142,10 +150,9 @@ export default {
             })
             this.getCalendarEvents()
           }).catch(error => {
-            console.error(error.response.data.error)
             this.$swal.fire({
               title: 'Error!',
-              text: 'Something went wrong, please fill all the fields and try again',
+              text: error.response.data.error.replace(/"/g, ''),
               icon: 'error'
             })
           })
@@ -157,7 +164,7 @@ export default {
       this.$swal.fire({
         title: event.customData.lineName,
         html: `
-          <p>Engineer(s): <b>${event.customData.title}</b></p>
+          <p>Employee(s): <b>${event.customData.title}</b></p>
           <p>Schedule: <b>${event.customData.scheduleName}</b></p>
           <small>${hours}</small>
         `,

@@ -1,5 +1,10 @@
 <template>
-  <main class="row flex-md-row-reverse">
+  <div class="d-flex align-items-center justify-content-center w-100 min-vh-100" v-if="isLoading">
+    <div class="spinner-border text-danger" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <main class="row flex-md-row-reverse" v-else>
     <section class="col col-12 col-md-6 p-5">
       <div class="my-5 text-end">
         <router-link to="/" class="text-decoration-none">
@@ -42,19 +47,31 @@ export default {
   data () {
     return {
       email: '',
+      isLoading: true,
       password: '',
       remember: false
     }
   },
-  mounted () {
-    if (localStorage.getItem('user')) {
-      const user = JSON.parse(localStorage.getItem('user'))
-      this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
-      this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
-      this.$store.commit('setToken', user.TOKEN)
-      this.$store.commit('setUser', user)
-      this.$router.push('/dashboard')
+  async mounted () {
+    if (localStorage.getItem('token') || sessionStorage.getItem('token')) {
+      try {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token')
+        const user = await LoginService.loginWithToken(token)
+        this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
+        this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
+        this.$store.commit('setToken', token)
+        this.$store.commit('setUser', user)
+        sessionStorage.setItem('token', token)
+        this.$router.push('/dashboard')
+      } catch (error) {
+        this.$swal.fire({
+          title: 'Error',
+          text: error.response.data.error,
+          icon: 'error'
+        })
+      }
     }
+    this.isLoading = false
   },
   methods: {
     async login () {
@@ -64,8 +81,9 @@ export default {
         this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
         this.$store.commit('setToken', user.TOKEN)
         this.$store.commit('setUser', user)
+        sessionStorage.setItem('token', user.TOKEN)
         if (this.remember) {
-          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('token', user.TOKEN)
         }
         this.$router.push('/dashboard')
       } catch (error) {

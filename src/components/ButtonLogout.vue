@@ -9,12 +9,23 @@ export default {
   name: 'ButtonLogout',
   methods: {
     logout () {
-      this.$store.commit('setIdProductLine', null)
-      this.$store.commit('setIsAdmin', false)
-      this.$store.commit('setToken', '')
-      this.$store.commit('setUser', {})
-      localStorage.removeItem('user')
-      this.$router.push('/login')
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: 'You will be logged out',
+        icon: 'warning',
+        confirmButtonText: 'Yes, log out!',
+        showCancelButton: true
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.$store.commit('setIdProductLine', null)
+          this.$store.commit('setIsAdmin', false)
+          this.$store.commit('setToken', '')
+          this.$store.commit('setUser', {})
+          localStorage.clear()
+          sessionStorage.clear()
+          this.$router.push('/login')
+        }
+      })
     }
   }
 }

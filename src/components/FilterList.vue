@@ -19,7 +19,7 @@
         {{ product.PRODUCT_LINE }}
       </li>
     </ul>
-    <ul class="list-group pt-3 px-5" v-if="!user.ROL === 'ADMIN' || eventFilter">
+    <ul class="list-group pt-3 px-5" v-if="user.ROL !== 'ADMIN' || eventFilter">
       <li v-for="(schedule, index) in schedules" :key="index"
         :class="['list-group-item text-white', eventStyles[index]]">
         {{ schedule.LABEL }} {{ schedule.START_TIME ? `from ${schedule.START_TIME} until ${schedule.END_TIME}` : '' }}

@@ -17,9 +17,6 @@ export default {
         showCancelButton: true
       }).then(result => {
         if (result.isConfirmed) {
-          this.$store.commit('setIdProductLine', null)
-          this.$store.commit('setIsAdmin', false)
-          this.$store.commit('setToken', '')
           this.$store.commit('setUser', {})
           localStorage.clear()
           sessionStorage.clear()

@@ -1,7 +1,7 @@
 <template>
-  <div v-for="(product, index) in products" :key="index" :class="['card col col-12 col-md-5 col-lg-3', styles[index]]"
+  <div v-for="(product, index) in products" :key="index" :class="['card col col-12 col-md-5 col-lg-3', productLineStyles[index]]"
     @click="goToCalendar(product.ID_PRODUCT_LINE)">
-    <i :class="['fa-solid p-4 fs-1 position-absolute bottom-0 end-0 text-white', icons[index]]"></i>
+    <i :class="['fa-solid p-4 fs-1 position-absolute bottom-0 end-0 text-white', productLineIcons[index]]"></i>
     <div class="card-body">
       <h3 class="card-title p-3 text-white">
         {{ product.PRODUCT_LINE }}
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { productLineIcons, productLineStyles } from '@/data'
+
 export default {
   name: 'ProductCard',
   props: {
@@ -21,25 +23,14 @@ export default {
   },
   data () {
     return {
-      icons: [
-        'fa-tower-cell',
-        'fa-arrow-right-to-city',
-        'fa-server',
-        'fa-cloud',
-        'fa-file-code',
-        'fa-caravan'
-      ]
-    }
-  },
-  computed: {
-    styles () {
-      return this.$store.getters.getProductLineStyles
+      productLineIcons,
+      productLineStyles
     }
   },
   methods: {
     goToCalendar (line) {
-      this.$store.commit('setMenuItemSelected', 3)
       this.$store.commit('setEventFilter', line)
+      this.$store.commit('setMenuItemSelected', 3)
     }
   }
 }

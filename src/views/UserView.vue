@@ -12,14 +12,9 @@ export default {
       user: {}
     }
   },
-  computed: {
-    token () {
-      return this.$store.getters.getToken
-    }
-  },
   async mounted () {
     try {
-      UsersService.setToken(this.token)
+      UsersService.setToken(sessionStorage.getItem('token'))
       if (this.$route.params.id) {
         this.user = await UsersService.getById(this.$route.params.id)
       }

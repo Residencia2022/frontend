@@ -57,9 +57,6 @@ export default {
       try {
         const token = localStorage.getItem('token') || sessionStorage.getItem('token')
         const user = await LoginService.loginWithToken(token)
-        this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
-        this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
-        this.$store.commit('setToken', token)
         this.$store.commit('setUser', user)
         sessionStorage.setItem('token', token)
         this.$router.push('/dashboard')
@@ -77,9 +74,6 @@ export default {
     async login () {
       try {
         const user = await LoginService.login(this.email, this.password)
-        this.$store.commit('setIdProductLine', user.ID_PRODUCT_LINE)
-        this.$store.commit('setIsAdmin', user.ROL === 'ADMIN')
-        this.$store.commit('setToken', user.TOKEN)
         this.$store.commit('setUser', user)
         sessionStorage.setItem('token', user.TOKEN)
         if (this.remember) {

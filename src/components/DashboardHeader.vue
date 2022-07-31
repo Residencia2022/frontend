@@ -8,10 +8,10 @@
         </button>
         <div class="text-start d-none d-md-block">
           <h3 class="text-capitalize">
-            {{ menuItems[menuItemSelected].title }}
+            {{ items[menuItemSelected].title }}
           </h3>
           <h5>
-            {{ menuItems[menuItemSelected].subtitle }}
+            {{ items[menuItemSelected].subtitle }}
           </h5>
         </div>
       </div>
@@ -31,6 +31,10 @@
 export default {
   name: 'DashboardHeader',
   props: {
+    items: {
+      type: Array,
+      default: () => []
+    },
     username: {
       type: String,
       default: 'User'
@@ -42,9 +46,6 @@ export default {
     }
   },
   computed: {
-    menuItems () {
-      return this.$store.getters.getMenuItems
-    },
     menuItemSelected () {
       return this.$store.getters.getMenuItemSelected
     }

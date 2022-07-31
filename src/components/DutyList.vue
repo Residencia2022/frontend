@@ -5,7 +5,7 @@
         <span class="fs-3 bg-light" @click="createEvent(day.id)">{{ day.day }}</span>
         <div class="fs-6 text-white">
           <p v-for="attr in attributes" :key="attr.key"
-            :class="['rounded p-1 m-1', isAdmin && !eventFilter ? attr.customData.styleAdmin : attr.customData.styleManager]"
+            :class="['rounded p-1 m-1', user.ROL === 'ADMIN' && !eventFilter ? attr.customData.styleAdmin : attr.customData.styleManager]"
             @click="showEvent(attr)">
             {{ attr.customData.title }}
           </p>
@@ -17,6 +17,8 @@
 
 <script>
 import CalendarService from '@/services/CalendarService'
+
+import { eventStyles, productLineStyles } from '@/data'
 
 export default {
   name: 'DutyList',
@@ -38,21 +40,6 @@ export default {
     eventFilter () {
       return this.$store.getters.getEventFilter
     },
-    eventStyles () {
-      return this.$store.getters.getEventStyles
-    },
-    idProductLine () {
-      return this.$store.getters.getIdProductLine
-    },
-    isAdmin () {
-      return this.$store.getters.getIsAdmin
-    },
-    productLineStyles () {
-      return this.$store.getters.getProductLineStyles
-    },
-    token () {
-      return this.$store.getters.getToken
-    },
     user () {
       return this.$store.getters.getUser
     }
@@ -67,7 +54,7 @@ export default {
   },
   async mounted () {
     try {
-      CalendarService.setToken(this.token)
+      CalendarService.setToken(sessionStorage.getItem('token'))
       await this.getCalendarEvents()
     } catch (error) {
       this.$swal.fire({
@@ -79,8 +66,8 @@ export default {
   },
   methods: {
     async getCalendarEvents () {
-      if (this.idProductLine) {
-        this.events = await CalendarService.getByLine(this.idProductLine)
+      if (this.user.ID_PRODUCT_LINE) {
+        this.events = await CalendarService.getByLine(this.user.ID_PRODUCT_LINE)
       } else {
         this.events = await CalendarService.getAll()
       }
@@ -89,8 +76,8 @@ export default {
           ...event,
           customData: {
             ...event.customData,
-            styleAdmin: this.productLineStyles[event.customData.line - 1],
-            styleManager: this.eventStyles[event.customData.schedule - 1]
+            styleAdmin: productLineStyles[event.customData.line - 1],
+            styleManager: eventStyles[event.customData.schedule - 1]
           }
         }
       })
@@ -104,7 +91,7 @@ export default {
       }
     },
     createEvent (date) {
-      if (this.isAdmin) {
+      if (this.user.ROL === 'ADMIN') {
         this.$swal.fire({
           title: 'Error',
           text: 'Only managers can create events',
@@ -140,7 +127,7 @@ export default {
       }).then(result => {
         if (result.isConfirmed) {
           CalendarService.createEvent({
-            ID_PRODUCT_LINE: this.idProductLine,
+            ID_PRODUCT_LINE: this.user.ID_PRODUCT_LINE,
             ID_SCHEDULE: this.idSchedule,
             EMPLOYEE: this.employee,
             DATES: date

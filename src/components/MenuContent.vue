@@ -3,10 +3,10 @@
     :class="[desktop ? 'col col-md-3 col-xl-2 pe-0 bg-huawei d-none d-md-flex flex-column justify-content-between' : '']">
     <nav class="nav flex-column">
       <image-logo v-if="desktop" />
-      <button v-for="(page, index) in menuItems" :key="index"
+      <button v-for="(item, index) in items" :key="index"
         :class="['nav-link btn text-dark text-start py-3 fs-5', menuItemSelected === index ? 'active' : '']"
         @click="setMenuItemSelected(index)">
-        <i :class="`fa-solid ${page.icon} me-3`"></i> {{ page.title }}
+        <i :class="`fa-solid ${item.icon} me-3`"></i>{{ item.title }}
       </button>
     </nav>
     <button-logout v-if="desktop" />
@@ -27,12 +27,13 @@ export default {
     desktop: {
       type: Boolean,
       default: false
+    },
+    items: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
-    menuItems () {
-      return this.$store.getters.getMenuItems
-    },
     menuItemSelected () {
       return this.$store.getters.getMenuItemSelected
     }

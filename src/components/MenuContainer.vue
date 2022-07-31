@@ -7,11 +7,11 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <menu-content />
+      <menu-content :items="items" />
       <button-logout />
     </div>
   </div>
-  <menu-content class="position-fixed top-0 start-0 min-vh-100" desktop />
+  <menu-content :items="items" class="position-fixed top-0 start-0 min-vh-100" desktop />
 </template>
 
 <script>
@@ -25,6 +25,12 @@ export default {
     ButtonLogout,
     ImageLogo,
     MenuContent
+  },
+  props: {
+    items: {
+      type: Array,
+      default: () => []
+    }
   }
 }
 </script>

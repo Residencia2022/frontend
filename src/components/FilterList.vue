@@ -1,6 +1,6 @@
 <template>
   <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-1">
-    <div class="p-3" v-if="isAdmin">
+    <div class="p-3" v-if="user.ROL === 'ADMIN'">
       <form class="form-group bg-light d-grid p-4 rounded shadow-sm">
         <div class="form-check mb-3" v-for="product in products" :key="product.ID_PRODUCT_LINE">
           <input class="form-check-input" type="radio" name="productLine" :id="`productLine${product.ID_PRODUCT_LINE}`"
@@ -13,13 +13,13 @@
           filter</button>
       </form>
     </div>
-    <ul class="list-group pt-3 px-5" v-if="isAdmin && !eventFilter">
+    <ul class="list-group pt-3 px-5" v-if="user.ROL === 'ADMIN' && !eventFilter">
       <li v-for="(product, index) in products" :key="index"
         :class="['list-group-item text-white', productLineStyles[index]]">
         {{ product.PRODUCT_LINE }}
       </li>
     </ul>
-    <ul class="list-group pt-3 px-5" v-if="!isAdmin || eventFilter">
+    <ul class="list-group pt-3 px-5" v-if="!user.ROL === 'ADMIN' || eventFilter">
       <li v-for="(schedule, index) in schedules" :key="index"
         :class="['list-group-item text-white', eventStyles[index]]">
         {{ schedule.LABEL }} {{ schedule.START_TIME ? `from ${schedule.START_TIME} until ${schedule.END_TIME}` : '' }}
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { eventStyles, productLineStyles } from '@/data'
+
 export default {
   name: 'FilterList',
   props: {
@@ -41,18 +43,18 @@ export default {
       default: () => []
     }
   },
+  data () {
+    return {
+      eventStyles,
+      productLineStyles
+    }
+  },
   computed: {
     eventFilter () {
       return this.$store.getters.getEventFilter
     },
-    eventStyles () {
-      return this.$store.getters.getEventStyles
-    },
-    isAdmin () {
-      return this.$store.getters.getIsAdmin
-    },
-    productLineStyles () {
-      return this.$store.getters.getProductLineStyles
+    user () {
+      return this.$store.getters.getUser
     }
   },
   methods: {

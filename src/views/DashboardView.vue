@@ -5,9 +5,9 @@
     </div>
   </div>
   <main class="row justify-content-end" v-else>
-    <menu-container />
+    <menu-container :items="menuItems" />
     <section class="col col-12 col-md-9 col-xl-10 p-5">
-      <dashboard-header :username="user.FIRST_NAME" />
+      <dashboard-header :items="menuItems" :username="user.FIRST_NAME" />
       <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'home'">
         <product-card :products="products" />
       </article>
@@ -37,6 +37,8 @@ import ProductsService from '@/services/ProductsService'
 import SchedulesService from '@/services/SchedulesService'
 import UsersService from '@/services/UsersService'
 
+import { menuItems } from '@/data'
+
 export default {
   name: 'DashboardView',
   components: {
@@ -51,23 +53,15 @@ export default {
     return {
       interns: [],
       isLoading: true,
+      menuItems,
       products: [],
       schedules: [],
       users: []
     }
   },
   computed: {
-    isAdmin () {
-      return this.$store.getters.getIsAdmin
-    },
-    menuItems () {
-      return this.$store.getters.getMenuItems
-    },
     menuItemSelected () {
       return this.$store.getters.getMenuItemSelected
-    },
-    token () {
-      return this.$store.getters.getToken
     },
     user () {
       return this.$store.getters.getUser
@@ -76,18 +70,19 @@ export default {
   async mounted () {
     const values = []
     try {
-      SchedulesService.setToken(this.token)
+      SchedulesService.setToken(sessionStorage.getItem('token'))
       values.push(SchedulesService.getAll())
-      if (!this.isAdmin) {
-        this.$store.commit('setMenuItems', [this.menuItems.pop()])
+      if (this.user.ROL !== 'ADMIN') {
+        this.menuItems = [menuItems[3]]
+        this.$store.commit('setMenuItemSelected', 0)
         const results = await Promise.all(values)
         this.schedules = results[0]
       } else {
-        InternsService.setToken(this.token)
+        InternsService.setToken(sessionStorage.getItem('token'))
         values.push(InternsService.getAll())
-        ProductsService.setToken(this.token)
+        ProductsService.setToken(sessionStorage.getItem('token'))
         values.push(ProductsService.getAll())
-        UsersService.setToken(this.token)
+        UsersService.setToken(sessionStorage.getItem('token'))
         values.push(UsersService.getAll())
         const results = await Promise.all(values)
         this.schedules = results[0]

@@ -19,6 +19,9 @@
         v-if="menuItems[menuItemSelected].title === 'users' && isEditing">
         <edit-user :products="products" />
       </article>
+      <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'interns'">
+        <intern-list :interns="interns" />
+      </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="menuItems[menuItemSelected].title === 'calendar'">
         <div class="col col-12 col-xxl-3 pb-5 pt-0">
           <filter-list :products="products" :schedules="schedules" />
@@ -37,6 +40,7 @@ import FilterList from '@/components/FilterList.vue'
 import ManagerCard from '@/components/ManagerCard.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import InternList from '@/components/InternList.vue'
 
 import InternsService from '@/services/InternsService'
 import ProductsService from '@/services/ProductsService'
@@ -54,7 +58,8 @@ export default {
     FilterList,
     ManagerCard,
     MenuContainer,
-    ProductCard
+    ProductCard,
+    InternList
   },
   data () {
     return {

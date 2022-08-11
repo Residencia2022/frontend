@@ -11,7 +11,7 @@
       </div>
       <form class="form-group" id="profile_picture">
         <div class="input-group">
-          <input type="file" name="file" id="file" class="form-control" @change="uploadImage">
+          <input type="file" name="file" id="file" class="form-control" accept="image/*" @change="uploadImage">
         </div>
       </form>
     </div>

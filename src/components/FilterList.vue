@@ -2,7 +2,7 @@
   <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-1">
     <div class="p-3" v-if="user.ROL === 'ADMIN'">
       <form class="form-group bg-light d-grid p-4 rounded shadow-sm">
-        <div class="form-check mb-3" v-for="product in products" :key="product.ID_PRODUCT_LINE">
+        <div class="form-check my-2" v-for="product in products" :key="product.ID_PRODUCT_LINE">
           <input class="form-check-input" type="radio" name="productLine" :id="`productLine${product.ID_PRODUCT_LINE}`"
             :checked="product.ID_PRODUCT_LINE === eventFilter" @click="setEventFilter(product.ID_PRODUCT_LINE)">
           <label class="form-check-label" :for="`productLine${product.ID_PRODUCT_LINE}`">

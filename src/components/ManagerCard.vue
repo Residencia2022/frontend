@@ -1,7 +1,13 @@
 <template>
+  <div
+    class="card px-0 col col-12 col-md-5 col-lg-3 d-flex flex-column align-items-center justify-content-center min-vh-15"
+    data-toggle="tooltip" data-placement="bottom" title="Add Manager" @click="editUser({})">
+    <i class="fa-regular fa-square-plus fs-1 text-success"></i>
+  </div>
   <div class="card px-0 col col-12 col-md-5 col-lg-3 d-flex flex-column align-items-center"
     v-for="(user, index) in users" :key="index">
-    <img src="https://picsum.photos/200/300" class="card-img-top rounded-circle mt-4" :alt="user.FIRST_NAME">
+    <img :src="user.PROFILE_PICTURE || 'https://picsum.photos/200/300'" class="card-img-top rounded-circle mt-4"
+      :alt="user.FIRST_NAME">
     <div class="card-body text-center">
       <h5 class="card-title fs-4 text-black">
         {{ user.FIRST_NAME }} {{ user.LAST_NAME }}
@@ -14,7 +20,7 @@
       </p>
     </div>
     <div class="card-footer w-100 text-center">
-      <router-link :to="`/user/${user.ID_USER}`" class="text-primary text-decoration-none">Edit user</router-link>
+      <p @click="editUser(user)" class="btn mb-0 p-0 text-primary">Edit user</p>
     </div>
   </div>
 </template>
@@ -26,6 +32,12 @@ export default {
     users: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    editUser (user) {
+      this.$store.commit('setIsEditing', true)
+      this.$store.commit('setUserEdited', user)
     }
   }
 }
@@ -48,5 +60,9 @@ export default {
 
 .card:hover {
   box-shadow: 0px 0px 31px 5px rgba(0, 0, 0, 0.13);
+}
+
+.min-vh-15 {
+  min-height: 15vh;
 }
 </style>

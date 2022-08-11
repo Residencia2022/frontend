@@ -11,8 +11,13 @@
       <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'home'">
         <product-card :products="products" />
       </article>
-      <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'users'">
+      <article class="row justify-content-center gap-5 mt-5"
+        v-if="menuItems[menuItemSelected].title === 'users' && !isEditing">
         <manager-card :users="users" />
+      </article>
+      <article class="row justify-content-center mt-5"
+        v-if="menuItems[menuItemSelected].title === 'users' && isEditing">
+        <edit-user :products="products" />
       </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="menuItems[menuItemSelected].title === 'calendar'">
         <div class="col col-12 col-xxl-3 pb-5 pt-0">
@@ -27,6 +32,7 @@
 <script>
 import DashboardHeader from '@/components/DashboardHeader.vue'
 import DutyList from '@/components/DutyList.vue'
+import EditUser from '@/components/EditUser.vue'
 import FilterList from '@/components/FilterList.vue'
 import ManagerCard from '@/components/ManagerCard.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
@@ -44,6 +50,7 @@ export default {
   components: {
     DashboardHeader,
     DutyList,
+    EditUser,
     FilterList,
     ManagerCard,
     MenuContainer,
@@ -60,6 +67,9 @@ export default {
     }
   },
   computed: {
+    isEditing () {
+      return this.$store.getters.getIsEditing
+    },
     menuItemSelected () {
       return this.$store.getters.getMenuItemSelected
     },
@@ -104,5 +114,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 </style>

@@ -91,6 +91,7 @@ export default {
     }
   },
   mounted () {
+    UsersService.setToken()
     if (this.userEdited.ID_USER) {
       this.isNew = false
       this.isActive = this.userEdited.ACTIVE === 1

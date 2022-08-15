@@ -1,7 +1,7 @@
 import { http } from '@/http'
 
 class UsersService {
-  constructor () {
+  setToken () {
     http.defaults.headers.common.token = `${sessionStorage.getItem('token')}`
   }
 

@@ -1,7 +1,7 @@
 import { http } from '@/http'
 
 class SchedulesService {
-  constructor () {
+  setToken () {
     http.defaults.headers.common.token = `${sessionStorage.getItem('token')}`
   }
 

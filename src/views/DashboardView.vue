@@ -85,6 +85,7 @@ export default {
   async mounted () {
     const values = []
     try {
+      SchedulesService.setToken()
       values.push(SchedulesService.getAll())
       if (this.user.ROL !== 'ADMIN') {
         this.menuItems = [menuItems[3]]
@@ -93,7 +94,9 @@ export default {
         this.schedules = results[0]
       } else {
         values.push(InternsService.getAll())
+        ProductsService.setToken()
         values.push(ProductsService.getAll())
+        UsersService.setToken()
         values.push(UsersService.getAll())
         const results = await Promise.all(values)
         this.schedules = results[0]

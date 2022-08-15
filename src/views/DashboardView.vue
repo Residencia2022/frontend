@@ -37,10 +37,10 @@ import DashboardHeader from '@/components/DashboardHeader.vue'
 import DutyList from '@/components/DutyList.vue'
 import EditUser from '@/components/EditUser.vue'
 import FilterList from '@/components/FilterList.vue'
+import InternList from '@/components/InternList.vue'
 import ManagerCard from '@/components/ManagerCard.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
 import ProductCard from '@/components/ProductCard.vue'
-import InternList from '@/components/InternList.vue'
 
 import InternsService from '@/services/InternsService'
 import ProductsService from '@/services/ProductsService'
@@ -56,10 +56,10 @@ export default {
     DutyList,
     EditUser,
     FilterList,
+    InternList,
     ManagerCard,
     MenuContainer,
-    ProductCard,
-    InternList
+    ProductCard
   },
   data () {
     return {
@@ -85,7 +85,6 @@ export default {
   async mounted () {
     const values = []
     try {
-      SchedulesService.setToken(sessionStorage.getItem('token'))
       values.push(SchedulesService.getAll())
       if (this.user.ROL !== 'ADMIN') {
         this.menuItems = [menuItems[3]]
@@ -93,11 +92,8 @@ export default {
         const results = await Promise.all(values)
         this.schedules = results[0]
       } else {
-        InternsService.setToken(sessionStorage.getItem('token'))
         values.push(InternsService.getAll())
-        ProductsService.setToken(sessionStorage.getItem('token'))
         values.push(ProductsService.getAll())
-        UsersService.setToken(sessionStorage.getItem('token'))
         values.push(UsersService.getAll())
         const results = await Promise.all(values)
         this.schedules = results[0]

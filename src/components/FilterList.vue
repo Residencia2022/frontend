@@ -9,7 +9,7 @@
             {{ product.PRODUCT_LINE }}
           </label>
         </div>
-        <button type="button" class="btn btn-primary" v-if="eventFilter" @click="setEventFilter(0)">Clear
+        <button type="button" class="btn btn-primary mt-2" v-if="eventFilter" @click="setEventFilter(0)">Clear
           filter</button>
       </form>
     </div>

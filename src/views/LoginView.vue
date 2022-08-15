@@ -73,7 +73,10 @@ export default {
   methods: {
     async login () {
       try {
-        const user = await LoginService.login(this.email, this.password)
+        const user = await LoginService.loginWithEmail({
+          EMAIL: this.email,
+          PASSWORD: this.password
+        })
         this.$store.commit('setUser', user)
         sessionStorage.setItem('token', user.TOKEN)
         if (this.remember) {

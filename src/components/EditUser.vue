@@ -91,7 +91,6 @@ export default {
     }
   },
   mounted () {
-    UsersService.setToken(sessionStorage.getItem('token'))
     if (this.userEdited.ID_USER) {
       this.isNew = false
       this.isActive = this.userEdited.ACTIVE === 1

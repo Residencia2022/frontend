@@ -1,8 +1,8 @@
 import { http } from '@/http'
 
 class CalendarService {
-  setToken (token) {
-    http.defaults.headers.common.token = `${token}`
+  constructor () {
+    http.defaults.headers.common.token = `${sessionStorage.getItem('token')}`
   }
 
   formatEvents (events) {

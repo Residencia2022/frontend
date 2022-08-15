@@ -54,7 +54,6 @@ export default {
   },
   async mounted () {
     try {
-      CalendarService.setToken(sessionStorage.getItem('token'))
       await this.getCalendarEvents()
     } catch (error) {
       this.$swal.fire({

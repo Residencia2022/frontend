@@ -13,7 +13,7 @@
   --remote-color: #179C52;
 }
 
-*:not(.fa) {
+*:not(.fa):not(.fas):not(.fa-regular):not(.fa-solid) {
   font-family: 'Manrope', sans-serif !important;
 }
 

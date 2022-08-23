@@ -85,13 +85,167 @@
         <router-link class="btn btn-dark" to="/login">Apply now</router-link>
       </div>
     </section>
+    <section class="mt-5 row">
+      <figure class="col col-12 col-md-6 col-lg-4">
+        <img src="../assets/learn.png" class="img-fluid" alt="Learn">
+      </figure>
+      <article class="col col-12 col-md-6 col-lg-8 ps-md-5">
+        <small class="title-gradient">Technical Assistance Center</small>
+        <h3>What you will learn in this course?</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        <div class="accordion" id="accordionProductLines">
+          <div class="accordion-item p-2">
+            <h2 class="accordion-header d-flex" id="productLineOne">
+              <img src="../assets/icon1.svg" alt="">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineOne" aria-expanded="true" aria-controls="collapseProductLineOne">
+                Wireless Network
+              </button>
+            </h2>
+            <div id="collapseProductLineOne" class="accordion-collapse collapse show" aria-labelledby="productLineOne" data-bs-parent="#accordionProductLines">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item p-2">
+            <h2 class="accordion-header d-flex" id="productLineTwo">
+              <img src="../assets/icon2.svg" alt="">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineTwo" aria-expanded="true" aria-controls="collapseProductLineTwo">
+                Fixed Network
+              </button>
+            </h2>
+            <div id="collapseProductLineTwo" class="accordion-collapse collapse" aria-labelledby="productLineTwo" data-bs-parent="#accordionProductLines">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item p-2">
+            <h2 class="accordion-header d-flex" id="productLineThree">
+              <img src="../assets/icon3.svg" alt="">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineThree" aria-expanded="true" aria-controls="collapseProductLineThree">
+                IT&OSS
+              </button>
+            </h2>
+            <div id="collapseProductLineThree" class="accordion-collapse collapse" aria-labelledby="productLineThree" data-bs-parent="#accordionProductLines">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item p-2">
+            <h2 class="accordion-header d-flex" id="productLineFour">
+              <img src="../assets/icon4.svg" alt="">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineFour" aria-expanded="true" aria-controls="collapseProductLineFour">
+                Cloud Core Network
+              </button>
+            </h2>
+            <div id="collapseProductLineFour" class="accordion-collapse collapse" aria-labelledby="productLineFour" data-bs-parent="#accordionProductLines">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item p-2">
+            <h2 class="accordion-header d-flex" id="productLineFive">
+              <img src="../assets/icon5.svg" alt="">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineFive" aria-expanded="true" aria-controls="collapseProductLineFive">
+                Application & Software
+              </button>
+            </h2>
+            <div id="collapseProductLineFive" class="accordion-collapse collapse" aria-labelledby="productLineFive" data-bs-parent="#accordionProductLines">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item p-2">
+            <h2 class="accordion-header d-flex" id="productLineSix">
+              <img src="../assets/icon5.svg" alt="">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineSix" aria-expanded="true" aria-controls="collapseProductLineSix">
+                Remote Delivery
+              </button>
+            </h2>
+            <div id="collapseProductLineSix" class="accordion-collapse collapse" aria-labelledby="productLineSix" data-bs-parent="#accordionProductLines">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
     <br>
+    <section class="text-center mt-5">
+      <small class="title-gradient">Testimonials</small>
+      <h1>Our experience</h1>
+    </section>
+    <section class="breaks mt-5 p-5">
+      <article class="white mt-5 p-5 row">
+        <div class="col col-12 col-md-8">
+          <div class="rounded-circle bg-danger mb-3 p-2 d-inline-block text-white">
+            <i class="fa-solid fa-quote-left fs-2"></i>
+          </div>
+          <h4>
+            {{ testimonials[testimonialSelected].name }}
+          </h4>
+          <h5>
+            {{ testimonials[testimonialSelected].job }}
+          </h5>
+          <p>
+            {{ testimonials[testimonialSelected].testimonial }}
+          </p>
+        </div>
+        <div class="col col-12 col-md-4 text-center">
+          <img :src="testimonials[testimonialSelected].image" :alt="testimonials[testimonialSelected].name" class="img-fluid rounded-circle">
+        </div>
+        <div class="col col-12 col-md-12 d-flex mt-4">
+          <img v-for="(testimonial, index) in testimonials" :key="index" :src="testimonials[index].image" :alt="testimonials[index].name" @click="changeTestimonial(index)" :class="['me-2 rounded-circle testimonial-img', index !== testimonialSelected ? 'disabled' : '']">
+        </div>
+      </article>
+    </section>
   </main>
 </template>
 
 <script>
 export default {
-  name: 'HomeView'
+  name: 'HomeView',
+  data () {
+    return {
+      testimonials: [
+        {
+          name: 'Cameron Williams',
+          job: 'ICT Engineer',
+          testimonial: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
+          image: 'https://picsum.photos/200'
+        },
+        {
+          name: 'Harvey Specter',
+          job: 'ICT Engineer',
+          testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
+          image: 'https://picsum.photos/200'
+        },
+        {
+          name: 'Mike Ross',
+          job: 'ICT Engineer',
+          testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
+          image: 'https://picsum.photos/200'
+        },
+        {
+          name: 'Rachel Green',
+          job: 'Ingeniero Chato',
+          testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
+          image: 'https://scontent.fmex25-1.fna.fbcdn.net/v/t1.6435-1/75266082_951238738587964_2211145770680188928_n.jpg?stp=dst-jpg_p320x320&_nc_cat=105&ccb=1-7&_nc_sid=7206a8&_nc_ohc=Z8d50jxg4V4AX-4wLGU&_nc_ht=scontent.fmex25-1.fna&oh=00_AT_SLctveRm2WM8QZrXFR5hLrSkBDcs3AZDGk4oHiQ0M5w&oe=6326149D'
+        }
+      ],
+      testimonialSelected: 0
+    }
+  },
+  methods: {
+    changeTestimonial (index) {
+      this.testimonialSelected = index
+    }
+  }
 }
 </script>
 
@@ -103,7 +257,7 @@ header {
   background-repeat: no-repeat;
 }
 
-.title-gradient{
+.title-gradient {
   background: linear-gradient(259.43deg, #EF593F 0%, #9A080D 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -125,9 +279,40 @@ body {
   background: #F8FAFF;
 }
 
-.break{
+.break {
   background: linear-gradient(98.92deg, #9A080D 0.79%, #CF0A2C 39.01%);
   border-radius: 30px;
+}
+
+.breaks {
+  background: linear-gradient(259.43deg, #EF593F 0%, #9A080D 100%);
+  box-shadow: 18px 19px 6px -9px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 80px;
+}
+
+.white {
+  background: #FFFFFF;
+  border-radius: 20px;
+}
+
+.accordion-button {
+  background: none !important;
+}
+
+.accordion-button:active, .accordion-button:focus {
+  box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+  box-shadow: none;
+}
+
+.testimonial-img {
+  width: 40px;
+}
+
+.testimonial-img.disabled {
+  opacity: 0.6 !important;
 }
 
 @media (max-width: 768px) {
@@ -139,5 +324,6 @@ body {
   header {
     min-height: 100vh;
   }
+
 }
 </style>

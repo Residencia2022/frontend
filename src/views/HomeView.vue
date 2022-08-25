@@ -9,7 +9,7 @@
           <i class="fa fa-bars text-white fs-2"></i>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
+          <div class="navbar-nav align-items-end">
             <a class="nav-link text-white fs-5 px-3 fw-bold active" aria-current="page" href="#">Home</a>
             <a class="nav-link text-white fs-5 px-3 fw-bold" href="#about">About us</a>
             <a class="nav-link text-white fs-5 px-3 fw-bold" href="#intern">Intern</a>
@@ -90,7 +90,7 @@
         <img src="../assets/learn.png" class="img-fluid" alt="Learn">
       </figure>
       <article class="col col-12 col-md-6 col-lg-8 ps-md-5">
-        <small class="title-gradient">Technical Assistance Center</small>
+        <h4 class="title-gradient">Technical Assistance Center</h4>
         <h3>What you will learn in this course?</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         <div class="accordion" id="accordionProductLines">
@@ -161,7 +161,7 @@
           </div>
           <div class="accordion-item p-2">
             <h2 class="accordion-header d-flex" id="productLineSix">
-              <img src="../assets/icon5.svg" alt="">
+              <img src="../assets/icon6.svg" alt="">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductLineSix" aria-expanded="true" aria-controls="collapseProductLineSix">
                 Remote Delivery
               </button>
@@ -177,19 +177,19 @@
     </section>
     <br>
     <section class="text-center mt-5">
-      <small class="title-gradient">Testimonials</small>
+      <h5 class="title-gradient">Testimonials</h5>
       <h1>Our experience</h1>
     </section>
-    <section class="breaks mt-5 p-5">
+    <section class="breaks my-5 p-5">
       <article class="white mt-5 p-5 row">
         <div class="col col-12 col-md-8">
           <div class="rounded-circle bg-danger mb-3 p-2 d-inline-block text-white">
             <i class="fa-solid fa-quote-left fs-2"></i>
           </div>
-          <h4>
+          <h4 class="name">
             {{ testimonials[testimonialSelected].name }}
           </h4>
-          <h5>
+          <h5 class="text-black-50">
             {{ testimonials[testimonialSelected].job }}
           </h5>
           <p>
@@ -204,6 +204,39 @@
         </div>
       </article>
     </section>
+    <footer class="mt-5 p-5 row">
+      <section class="col col-12 col-md-8 d-flex flex-column flex-md-row align-items-center mb-5">
+        <img src="../assets/logo.png" alt="Logo" style="width: 85px; height: 85px; aspect-ratio: 1" class="mb-3" />
+        <div class="ms-md-4">
+          <h5 class="title-gradient">Technical Assistance Center</h5>
+          <p>Our vision and mission is to bring digital to every person, home and organization for a fully connected, intelligent world.</p>
+          <div class="d-flex gap-2">
+            <a href="" class="p-2 rounded shadow">
+              <img src="../assets/fb.svg" alt="" >
+            </a>
+            <a href="" class="p-2 rounded shadow">
+              <img src="../assets/ig.svg" alt="" >
+            </a>
+            <a href="" class="p-2 rounded shadow">
+              <img src="../assets/tw.svg" alt="" >
+            </a>
+            <a href="" class="p-2 rounded shadow">
+              <img src="../assets/wa.svg" alt="" >
+            </a>
+          </div>
+        </div>
+      </section>
+      <section class="col col-12 col-md-4">
+        <h4 class="title-gradient">Be part of us!</h4>
+        <p>Apply to the internship program.</p>
+        <router-link class="btn btn-primary" to="/login">Apply now</router-link>
+      </section>
+      <section class="col col-12 p-5">
+        <p class="text-center">
+          <b>&copy; 2022 | Huawei Mexico TAC | All Rights Reserved.</b>
+        </p>
+      </section>
+    </footer>
   </main>
 </template>
 
@@ -290,6 +323,11 @@ body {
   border-radius: 0px 80px;
 }
 
+.name{
+  color: #232527;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 .white {
   background: #FFFFFF;
   border-radius: 20px;
@@ -315,15 +353,23 @@ body {
   opacity: 0.6 !important;
 }
 
+.img-fluid.rounded-circle {
+  width: 250px !important;
+}
+
 @media (max-width: 768px) {
   .w-50 {
     width: 100% !important;
   }
 }
+
 @media (min-width: 1025px) {
   header {
     min-height: 100vh;
   }
+}
 
+:target {
+  scroll-margin-top: 3rem !important;
 }
 </style>

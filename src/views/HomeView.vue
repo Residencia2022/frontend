@@ -82,7 +82,7 @@
         <h3>Apply to the internship program</h3>
       </div>
       <div class="col col-12 col-md-4 d-flex align-items-center justify-content-end">
-        <router-link class="btn btn-dark" to="/login">Apply now</router-link>
+        <router-link class="btn btn-dark" to="/apply">Apply now</router-link>
       </div>
     </section>
     <section class="mt-5 row">
@@ -229,7 +229,7 @@
       <section class="col col-12 col-md-4">
         <h4 class="title-gradient">Be part of us!</h4>
         <p>Apply to the internship program.</p>
-        <router-link class="btn btn-primary" to="/login">Apply now</router-link>
+        <router-link class="btn btn-primary" to="/apply">Apply now</router-link>
       </section>
       <section class="col col-12 p-5">
         <p class="text-center">

@@ -30,13 +30,15 @@ export default {
   },
   data () {
     return {
-      attributes: [],
       employee: '',
       events: [],
       idSchedule: null
     }
   },
   computed: {
+    attributes () {
+      return this.$store.getters.getAttributes
+    },
     eventFilter () {
       return this.$store.getters.getEventFilter
     },
@@ -85,9 +87,9 @@ export default {
     },
     filterEvents () {
       if (this.eventFilter) {
-        this.attributes = this.events.filter(event => event.customData.line === this.eventFilter)
+        this.$store.commit('setAttributes', this.events.filter(event => event.customData.line === this.eventFilter))
       } else {
-        this.attributes = this.events
+        this.$store.commit('setAttributes', this.events)
       }
     },
     createEvent (date) {

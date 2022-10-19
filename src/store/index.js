@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    attributes: [],
     eventFilter: 0,
     isEditing: false,
     menuItemSelected: 0,
@@ -9,6 +10,7 @@ export default createStore({
     userEdited: {}
   },
   getters: {
+    getAttributes: (state) => state.attributes,
     getEventFilter: (state) => state.eventFilter,
     getIsEditing: (state) => state.isEditing,
     getMenuItemSelected: (state) => state.menuItemSelected,
@@ -16,6 +18,9 @@ export default createStore({
     getUserEdited: (state) => state.userEdited
   },
   mutations: {
+    setAttributes (state, attributes) {
+      state.attributes = attributes
+    },
     setEventFilter (state, eventFilter) {
       state.eventFilter = eventFilter
     },

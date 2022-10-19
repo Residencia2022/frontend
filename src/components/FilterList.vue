@@ -1,7 +1,8 @@
 <template>
   <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-1">
-    <div class="p-3" v-if="user.ROL === 'ADMIN'">
-      <form class="form-group bg-light d-grid p-4 rounded shadow-sm">
+    <div class="bg-light p-4 rounded shadow-sm">
+      <print-button class="d-block w-100" />
+      <form class="form-group d-grid" v-if="user.ROL === 'ADMIN'">
         <div class="form-check my-2" v-for="product in products" :key="product.ID_PRODUCT_LINE">
           <input class="form-check-input" type="radio" name="productLine" :id="`productLine${product.ID_PRODUCT_LINE}`"
             :checked="product.ID_PRODUCT_LINE === eventFilter" @click="setEventFilter(product.ID_PRODUCT_LINE)">
@@ -30,9 +31,13 @@
 
 <script>
 import { eventStyles, productLineStyles } from '@/data'
+import PrintButton from './PrintButton.vue'
 
 export default {
   name: 'FilterList',
+  components: {
+    PrintButton
+  },
   props: {
     products: {
       type: Array,

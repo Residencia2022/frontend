@@ -47,7 +47,7 @@ main.row {
   border-color: var(--red-color) !important;
 }
 
-.form-check-input:focus {
+.form-check-input:focus, .btn-outline-primary:focus {
   box-shadow: none !important;
 }
 
@@ -61,7 +61,17 @@ main.row {
   background-color: var(--red-color) !important;
 }
 
-.btn-primary:active, .btn-primary:focus, .swal2-confirm:focus {
+.btn-outline-primary {
+  border-color: var(--red-color) !important;
+  color: var(--red-color) !important;
+}
+
+.btn-outline-primary:active, .btn-outline-primary:hover {
+  background-color: var(--red-color) !important;
+  color: white !important;
+}
+
+.btn-primary:active, .btn-primary:focus, .btn-outline-primary:active, .swal2-confirm:focus {
   box-shadow: 0 0 0 0.2rem rgba(207, 10, 44, 0.25) !important;
 }
 

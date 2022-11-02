@@ -13,7 +13,7 @@
         {{ user.FIRST_NAME }} {{ user.LAST_NAME }}
       </h5>
       <p class="card-text fs-5 text-secondary">
-        {{ user.ROL }}
+        {{ user.PRODUCT_LINE || user.ROL }}
       </p>
       <p class="card-text fs-5 text-danger">
         {{ user.ID_USER }}

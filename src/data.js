@@ -1,4 +1,10 @@
-const eventStyles = ['bg-primary', 'bg-success', 'bg-warning', 'bg-danger']
+const eventStyles = [
+  'bg-success',
+  'bg-primary',
+  'bg-secondary',
+  'bg-warning',
+  'bg-danger'
+]
 
 const menuItems = [
   {

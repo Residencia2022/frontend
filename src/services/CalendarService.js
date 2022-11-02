@@ -23,7 +23,8 @@ class CalendarService {
           scheduleName: event.LABEL,
           start: event.START_TIME,
           end: event.END_TIME,
-          title: event.EMPLOYEE
+          title: event.EMPLOYEE,
+          customOrder: `${date[0]}${date[1]}${date[2]}${event.ID_PRODUCT_LINE}${event.ID_SCHEDULE}`
         },
         dates: new Date(year, month, day)
       }

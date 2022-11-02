@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import { jsPDF as JSdotPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 export default {
   name: 'PrintButton',
   data () {
@@ -36,7 +39,7 @@ export default {
           this.end = document.getElementById('end').value
         }
       }).then(result => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && this.start && this.end) {
           let startDate = this.start.split('-')
           const startYear = parseInt(startDate[0])
           const startMonth = parseInt(startDate[1]) - 1
@@ -48,14 +51,31 @@ export default {
           startDate = new Date(startYear, startMonth, startDay)
           endDate = new Date(endYear, endMonth, endDay)
           const data = this.attributes.filter(attribute => {
-            console.log(attribute.dates)
             return attribute.dates >= startDate && attribute.dates <= endDate
           })
-          console.log(data)
+          data.sort((a, b) => {
+            return a.customData.customOrder - b.customData.customOrder
+          })
+          this.generatePDF(data)
         }
       })
     },
     generatePDF (data) {
+      const doc = new JSdotPDF()
+      autoTable(doc, {
+        head: [['Date', 'Product Line', 'Schedule', 'Engineer(s)']],
+        columnStyles: { 0: { minCellWidth: 15 } },
+        body: data.map(attribute => {
+          return [
+            attribute.dates.toLocaleDateString(),
+            attribute.customData.lineName,
+            `${attribute.customData.scheduleName} ${attribute.customData.start ? `(${attribute.customData.start} - ${attribute.customData.end})` : ''}`,
+            attribute.customData.title
+          ]
+        })
+      })
+      const documentName = `Report_${this.start}_${this.end}.pdf`
+      doc.save(documentName)
     }
   }
 }

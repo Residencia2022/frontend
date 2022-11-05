@@ -57,6 +57,12 @@ export default {
             return a.customData.customOrder - b.customData.customOrder
           })
           this.generatePDF(data)
+        } else {
+          this.$swal.fire({
+            title: 'Error',
+            text: 'Please select a start and end date',
+            icon: 'error'
+          })
         }
       })
     },

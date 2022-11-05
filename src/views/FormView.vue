@@ -63,10 +63,10 @@
         <hr class="hr" />
         <hr />
       </div>
-      <form class="form-group col col-12 col-lg-8" @submit.prevent="">
+      <form class="form-group col col-12 col-lg-8" @submit.prevent="saveIntern">
         <div class="mb-3" id="icon-relative">
           <label for="inputName" class="form-label">Your name</label>
-          <input type="text" class="form-control ps-5" id="inputName" required />
+          <input type="text" class="form-control ps-5" id="inputName" v-model="intern.FIRST_NAME" required />
             <span id="icon">
               <i class="fa-solid fa-circle-user"></i>
             </span>
@@ -75,7 +75,7 @@
           <label for="inputBachelor" class="form-label">
             Your bachelor degree
           </label>
-          <input type="text" class="form-control ps-5" id="inputBachelor" required />
+          <input type="text" class="form-control ps-5" id="inputBachelor" v-model="intern.DEGREE" required />
           <span id="icon">
               <i class="fa-solid fa-graduation-cap"></i>
             </span>
@@ -89,6 +89,7 @@
             id="inputParticipate"
             rows="3"
             maxlength="250"
+            v-model="intern.INTEREST"
             required
           ></textarea>
         </div>
@@ -101,6 +102,7 @@
             id="inputMotivation"
             rows="3"
             maxlength="250"
+            v-model="intern.MOTIVATION"
             required
           ></textarea>
         </div>
@@ -114,6 +116,7 @@
             id="inputExperience"
             rows="3"
             maxlength="250"
+            v-model="intern.EXPERIENCE"
             required
           ></textarea>
         </div>
@@ -139,7 +142,7 @@
           <label for="inputBachelor" class="form-label">
             What position interests you?
           </label>
-          <select class="form-select" aria-label="Default select example" required>
+          <select class="form-select" aria-label="Default select example" v-model="intern.ID_POSITION" required>
             <option value="1" selected>Select one</option>
           </select>
         </div>
@@ -147,7 +150,7 @@
           <label for="inputNumber" class="form-label">
             What is your phone number?
           </label>
-          <input type="number" class="form-control ps-5" id="inputNumber" required />
+          <input type="text" class="form-control ps-5" id="inputNumber" v-model="intern.PHONE_NUMBER" required />
           <span id="icon">
               <i class="fa-solid fa-phone"></i>
             </span>
@@ -156,20 +159,17 @@
           <label for="inputEmail" class="form-label">
             What is your email address?
           </label>
-          <input type="email" class="form-control ps-5" id="inputEmail" required/>
+          <input type="email" class="form-control ps-5" id="inputEmail" v-model="intern.EMAIL" required/>
           <span id="icon">
               <i class="fa-solid fa-envelope"></i>
             </span>
         </div>
-        <div class="mb-3" id="icon-relative">
+        <form class="mb-3" id="inputCV">
           <label for="inputCV" class="form-label">
             Please, share your CV in english with us
           </label>
-          <input type="file" class="form-control" id="inputCV" required/>
-          <span id="icon-right">
-              <i class="fa-solid fa-cloud-arrow-up"></i>
-            </span>
-        </div>
+          <input type="file" class="form-control" name="file" id="file" @change="uploadCV"/>
+        </form>
         <button type="submit" class="btn btn-primary d-flex m-auto justify-content-center px-5 py-3 mb-5">Send</button>
       </form>
     </section>
@@ -177,6 +177,10 @@
 </template>
 
 <script>
+import InternsService from '@/services/InternsService'
+
+import { url } from '@/http'
+
 export default {
   name: 'FormView',
   data () {
@@ -207,7 +211,68 @@ export default {
           name: 'C2',
           description: 'lorem c2'
         }
-      ]
+      ],
+      intern: {
+        FIRST_NAME: '',
+        DEGREE: '',
+        INTEREST: '',
+        MOTIVATION: '',
+        EXPERIENCE: '',
+        ID_POSITION: '',
+        PHONE_NUMBER: '',
+        EMAIL: '',
+        CV: ''
+      }
+    }
+  },
+  methods: {
+    uploadCV () {
+      const form = document.getElementById('inputCV')
+      const formData = new FormData(form)
+      InternsService.uploadCV(formData)
+        .then(response => {
+          this.intern.CV = `${url}/files/${response}`
+        }).catch(error => {
+          this.$swal.fire({
+            title: 'Error',
+            text: error.response.data.error,
+            icon: 'error'
+          })
+        })
+    },
+    saveIntern () {
+      this.intern.ENGLISH_LEVEL = this.englishLevels[this.englishLevel].name
+      InternsService.create(this.intern)
+        .then(response => {
+          this.$swal.fire({
+            title: 'Success',
+            text: response,
+            icon: 'success'
+          }).then(() => {
+            this.clearForm()
+          })
+        }).catch(error => {
+          const errors = error.response.data.error
+          const errorsFormatted = errors.replace(/"/g, '').replace(/_/g, ' ')
+          this.$swal.fire({
+            title: 'Error',
+            text: errorsFormatted,
+            icon: 'error'
+          })
+        })
+    },
+    clearForm () {
+      this.intern = {
+        FIRST_NAME: '',
+        DEGREE: '',
+        INTEREST: '',
+        MOTIVATION: '',
+        EXPERIENCE: '',
+        ID_POSITION: '',
+        PHONE_NUMBER: '',
+        EMAIL: '',
+        CV: ''
+      }
     }
   }
 }

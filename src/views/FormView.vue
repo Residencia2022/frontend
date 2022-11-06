@@ -143,7 +143,10 @@
             What position interests you?
           </label>
           <select class="form-select" aria-label="Default select example" v-model="intern.ID_POSITION" required>
-            <option value="1" selected>Select one</option>
+            <option selected disabled value="">Select a position</option>
+            <option v-for="position in positions" :key="position.ID_POSITION" :value="position.ID_POSITION">
+              {{ position.POSITION }}
+            </option>
           </select>
         </div>
         <div class="mb-3" id="icon-relative">
@@ -170,7 +173,7 @@
           </label>
           <input type="file" class="form-control" name="file" id="file" @change="uploadCV"/>
         </form>
-        <button type="submit" class="btn btn-primary d-flex m-auto justify-content-center px-5 py-3 mb-5">Send</button>
+        <button type="submit" class="btn btn-primary d-flex m-auto justify-content-center px-5 py-3 mb-5" :disabled="!ready">Send</button>
       </form>
     </section>
   </main>
@@ -178,6 +181,7 @@
 
 <script>
 import InternsService from '@/services/InternsService'
+import PositionsService from '@/services/PositionsService'
 
 import { url } from '@/http'
 
@@ -222,7 +226,26 @@ export default {
         PHONE_NUMBER: '',
         EMAIL: '',
         CV: ''
-      }
+      },
+      positions: [],
+      ready: false
+    }
+  },
+  async mounted () {
+    try {
+      this.positions = await PositionsService.getAll()
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  watch: {
+    intern: {
+      handler () {
+        if (this.intern.CV) {
+          this.ready = true
+        }
+      },
+      deep: true
     }
   },
   methods: {
@@ -253,7 +276,10 @@ export default {
           })
         }).catch(error => {
           const errors = error.response.data.error
-          const errorsFormatted = errors.replace(/"/g, '').replace(/_/g, ' ')
+          let errorsFormatted = errors.replace(/"/g, '').replace(/_/g, ' ')
+          if (errorsFormatted.includes('Duplicate entry')) {
+            errorsFormatted = errorsFormatted.replace('Duplicate entry', 'This email is already registered')
+          }
           this.$swal.fire({
             title: 'Error',
             text: errorsFormatted,

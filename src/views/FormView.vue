@@ -80,6 +80,24 @@
               <i class="fa-solid fa-graduation-cap"></i>
             </span>
         </div>
+        <div class="mb-3" id="icon-relative">
+          <label for="inputSchool" class="form-label">
+            Your school
+          </label>
+          <input class="form-control ps-5" list="school" name="school" v-model="intern.SCHOOL" required>
+          <datalist id="school">
+            <option value="Universidad Politécnica de Querétaro"></option>
+            <option value="Universidad Tecnológica de San Juan del Río"></option>
+            <option value="Instituto Politécnico Nacional"></option>
+            <option value="Universidad Nacional Autónoma de México"></option>
+            <option value="Universidad Autónoma del Estado de Hidalgo"></option>
+            <option value="Instituto Tecnológico Superior del Occidente del Estado de Hidalgo"></option>
+            <option value="Universidad Autónoma Metropolitana"></option>
+          </datalist>
+          <span id="icon">
+            <i class="fa-solid fa-school"></i>
+          </span>
+        </div>
         <div class="mb-3">
           <label for="inputParticipate" class="form-label">
             Why would you like to participate in the program?
@@ -171,7 +189,7 @@
           <label for="inputCV" class="form-label">
             Please, share your CV in english with us
           </label>
-          <input type="file" class="form-control" name="file" id="file" @change="uploadCV"/>
+          <input type="file" class="form-control" name="file" id="file" @change="uploadCV" accept="application/pdf"/>
         </form>
         <button type="submit" class="btn btn-primary d-flex m-auto justify-content-center px-5 py-3 mb-5" :disabled="!ready">Send</button>
       </form>
@@ -219,6 +237,7 @@ export default {
       intern: {
         FIRST_NAME: '',
         DEGREE: '',
+        SCHOOL: '',
         INTEREST: '',
         MOTIVATION: '',
         EXPERIENCE: '',
@@ -232,11 +251,7 @@ export default {
     }
   },
   async mounted () {
-    try {
-      this.positions = await PositionsService.getAll()
-    } catch (error) {
-      console.error(error)
-    }
+    this.positions = await PositionsService.getAll()
   },
   watch: {
     intern: {

@@ -75,6 +75,14 @@
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus, tortor quis vivamus odio ac risus. Arcu, et a posuere mi interdum porta. Convallis quisque odio tincidunt commodo. Nibh ut blandit semper est leo fusce.
       </p>
+      <Carousel :autoplay="2000" :wrapAround="true" :breakpoints="breakpoints">
+        <Slide v-for="slide in 5" :key="slide">
+          <img class="carousel__item" src="https://picsum.photos/800" alt="slide">
+        </Slide>
+        <template #addons>
+          <Pagination />
+        </template>
+      </Carousel>
     </section>
     <section class="break mt-5 p-5 row">
       <div class="col col-12 col-md-8 text-white">
@@ -241,10 +249,29 @@
 </template>
 
 <script>
+import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
+
 export default {
   name: 'HomeView',
+  components: {
+    Carousel,
+    Slide,
+    Pagination
+  },
   data () {
     return {
+      breakpoints: {
+        320: {
+          slidesPerView: 1
+        },
+        768: {
+          itemsToShow: 3.5
+        },
+        1024: {
+          itemsToShow: 5
+        }
+      },
       testimonials: [
         {
           name: 'Cameron Williams',
@@ -371,5 +398,55 @@ body {
 
 :target {
   scroll-margin-top: 3rem !important;
+}
+
+.carousel__slide {
+  padding: 5px;
+}
+
+.carousel__viewport {
+  perspective: 2000px;
+}
+
+.carousel__track {
+  transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+  transition: 0.5s;
+}
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active~.carousel__slide {
+  transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: 1;
+  transform: rotateY(-10deg) scale(0.95);
+}
+
+.carousel__slide--next {
+  opacity: 1;
+  transform: rotateY(10deg) scale(0.95);
+}
+
+.carousel__slide--active {
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
+}
+
+.carousel__slide {
+  height: 30rem;
+}
+
+.carousel__slide img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover !important;
 }
 </style>

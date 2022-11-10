@@ -12,7 +12,7 @@ class InternsService {
   }
 
   async update (id, status) {
-    const response = await http.patch(`/api/interns/${id}`, { status })
+    const response = await http.patch(`/api/interns/${id}`, { STATUS: status })
     return response.data.data
   }
 

@@ -20,7 +20,7 @@
         <edit-user :products="products" />
       </article>
       <article class="row justify-content-center gap-5 mt-5" v-if="menuItems[menuItemSelected].title === 'interns'">
-        <intern-list :interns="interns" />
+        <intern-list />
       </article>
       <article class="row flex-xxl-row-reverse mt-5" v-if="menuItems[menuItemSelected].title === 'calendar'">
         <div class="col col-12 col-xxl-3 pb-5 pt-0">
@@ -42,7 +42,6 @@ import ManagerCard from '@/components/ManagerCard.vue'
 import MenuContainer from '@/components/MenuContainer.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
-import InternsService from '@/services/InternsService'
 import ProductsService from '@/services/ProductsService'
 import SchedulesService from '@/services/SchedulesService'
 import UsersService from '@/services/UsersService'
@@ -63,7 +62,6 @@ export default {
   },
   data () {
     return {
-      interns: [],
       isLoading: true,
       menuItems,
       products: [],
@@ -93,16 +91,14 @@ export default {
         const results = await Promise.all(values)
         this.schedules = results[0]
       } else {
-        values.push(InternsService.getAll())
         ProductsService.setToken()
         values.push(ProductsService.getAll())
         UsersService.setToken()
         values.push(UsersService.getAll())
         const results = await Promise.all(values)
         this.schedules = results[0]
-        this.interns = results[1]
-        this.products = results[2]
-        this.users = results[3]
+        this.products = results[1]
+        this.users = results[2]
       }
     } catch (error) {
       this.$swal.fire({

@@ -21,7 +21,7 @@
     <section class="container text-white mt-5 px-5 px-md-0">
       <h1 class="display-3 my-5">Technical Assistance <br>Center</h1>
       <h5 class="my-5 w-50">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure tempora inventore quibusdam, deserunt accusamus magnam porro explicabo adipisci et vel unde fuga optio dignissimos asperiores dolorem tempore voluptatibus. Deserunt, unde.
+        Customers can access Huawei Technical Assistance Center (TAC) 24 hours a day, 7 days a week through TAC hotlines, emails, websites, and mobile APP for product technical consultation, troubleshooting issues, and other service requests.
       </h5>
       <div class="my-5">
         <a class="btn btn-primary" href="#about">Know more</a>
@@ -111,7 +111,12 @@
             </h2>
             <div id="collapseProductLineOne" class="accordion-collapse collapse show" aria-labelledby="productLineOne" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                <b>5G</b><br>
+                The development of global 5G in network, deployment, ecology and experience is beyond imagination. Whether for individuals, families or every organization, 5G is creating unprecedented value. We will work closely with our customers and partners to focus on 5G innovative applications, prosper the 5G ecosystem, and accelerate 5G commercial success.<br><br>
+                <b>LTE Network</b><br>
+                Zero fallback refers to expansion of the fundamental LTE network coverage so that it is the same as that of 2G and 3G networks. With expanded coverage, LTE data, VoLTE, and IoT services will always be provided by the LTE network. Users will no longer fall back to 2G or 3G networks. The enhanced coverage also lays a foundation for 2G and 3G users to be migrated to LTE networks.<br><br>
+                <b>Microwave</b><br>
+                Huawei microwave equipment provides a maximum of 20 Gbit/s capacity by using microwave technologies such as CA (carrier aggregation), MIMO (multiple-input multiple-output technology), common microwave frequency band, and E-band realize dual-frequency microwave, through the combination of "1" dual-frequency antenna + "2" (6-86GHz) RF units of any frequency band.<br>
               </div>
             </div>
           </div>
@@ -124,7 +129,12 @@
             </h2>
             <div id="collapseProductLineTwo" class="accordion-collapse collapse" aria-labelledby="productLineTwo" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                <b>Data Communication</b><br>
+                Huawei’s NetEngine, CloudEngine, AirEngine, and HiSecEngine products are used to build a leading data communication solutions. Working with the intelligent Network Cloud Engine, these products allow for simplified, highly available, and multi-service networks and intelligent connections, bringing IP networks into the intelligent era.<br><br>
+                <b>Transmission Network</b><br>
+                Huawei is committed to providing carrier and enterprise customers with high-performance transmission solutions featuring high availability, large bandwidth, and intelligence. These carry multiple services, such as video, DC interconnection, and premium private line services. Huawei's leading 200G WDM solutions have served more than 100 operators around the world. <br><br>
+                <b>Access Network</b><br>
+                In the access domain, Huawei provides high-bandwidth, intelligent, and simplified all-optical access solutions. These solutions will enable smooth evolution to 10G PON or 50G PON, and meet customer needs for wide Gigabit coverage, 8K and VR videos, and enterprise private lines.
               </div>
             </div>
           </div>
@@ -137,7 +147,9 @@
             </h2>
             <div id="collapseProductLineThree" class="accordion-collapse collapse" aria-labelledby="productLineThree" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Huawei provides reliable, resilient, cost-effective, full-stack cloud solutions, from public cloud, hybrid or private cloud, to edge cloud, meeting carriers' diverse needs. <br><br>
+                Huawei provides all-scenario data infrastructure designed for carrier workloads. Huawei storage resource pool solution features on-demand allocation, intelligent management, and multi-cloud convergence to reconstruct carriers data infrastructure for service innovation.<br><br>
+                Huawei is committed to pursuing ongoing innovation in technical architecture and engineering fields. By following the principle of "open hardware, open-source software, partner enablement, and talent cultivation", we grow together with ecosystem partners and provide carriers with intelligent computing featuring ultimate performance.
               </div>
             </div>
           </div>
@@ -150,7 +162,7 @@
             </h2>
             <div id="collapseProductLineFour" class="accordion-collapse collapse" aria-labelledby="productLineFour" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Core network is the pivot connecting industry networks, communications networks, and the Internet. The Huawei Cloud Core Network product line provides a full series of core network products and solutions, helping carriers build simplified, agile, convergent, efficient, and reliable core networks, enable a wide range of industries, and achieve business success.
               </div>
             </div>
           </div>
@@ -163,7 +175,7 @@
             </h2>
             <div id="collapseProductLineFive" class="accordion-collapse collapse" aria-labelledby="productLineFive" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Provides global carriers with industry-leading, secure, and reliable end-to-end solutions, covering network planning, construction, O&M, optimization, and service operations. Over the past 30 years, Huawei has gradually become one of the world's largest and most advanced service and software providers, with delivery capabilities and resources that are distributed around the world. In the future, Huawei, as an always reliable strategic partner of carriers, will continue to devote itself to helping carriers achieve digital transformation and business success.
               </div>
             </div>
           </div>

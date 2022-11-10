@@ -183,6 +183,16 @@
         </div>
       </article>
     </section>
+    <div class="container p-lg-5">
+      <article class="main-gallery p-lg-5">
+        <div class="box1"><img src="../assets/uno.jpg" alt=""></div>
+        <div class="box2"><img src="../assets/dos.jpg" alt=""></div>
+        <div class="box3"><img src="../assets/tres.jpg" alt=""></div>
+        <div class="box4"><img src="../assets/cuatro.jpg" alt=""></div>
+        <div class="box5"><img src="../assets/cinco.jpg" alt=""></div>
+        <div class="box6"><img src="../assets/seis.jpg" alt=""></div>
+      </article>
+    </div>
     <br>
     <section class="text-center mt-5">
       <h5 class="title-gradient">Testimonials</h5>
@@ -207,7 +217,7 @@
         <div class="col col-12 col-md-4 text-center">
           <img :src="testimonials[testimonialSelected].image" :alt="testimonials[testimonialSelected].name" class="img-fluid rounded-circle">
         </div>
-        <div class="col col-12 col-md-12 d-flex mt-4">
+        <div class="col col-12 col-md-12 mt-4">
           <img v-for="(testimonial, index) in testimonials" :key="index" :src="testimonials[index].image" :alt="testimonials[index].name" @click="changeTestimonial(index)" :class="['me-2 rounded-circle testimonial-img', index !== testimonialSelected ? 'disabled' : '']">
         </div>
       </article>
@@ -295,7 +305,7 @@ export default {
           name: 'Rachel Green',
           job: 'Ingeniero Chato',
           testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
-          image: 'https://scontent.fmex25-1.fna.fbcdn.net/v/t1.6435-1/75266082_951238738587964_2211145770680188928_n.jpg?stp=dst-jpg_p320x320&_nc_cat=105&ccb=1-7&_nc_sid=7206a8&_nc_ohc=Z8d50jxg4V4AX-4wLGU&_nc_ht=scontent.fmex25-1.fna&oh=00_AT_SLctveRm2WM8QZrXFR5hLrSkBDcs3AZDGk4oHiQ0M5w&oe=6326149D'
+          image: 'https://picsum.photos/200'
         }
       ],
       testimonialSelected: 0
@@ -384,18 +394,6 @@ body {
   width: 250px !important;
 }
 
-@media (max-width: 768px) {
-  .w-50 {
-    width: 100% !important;
-  }
-}
-
-@media (min-width: 1025px) {
-  header {
-    min-height: 100vh;
-  }
-}
-
 :target {
   scroll-margin-top: 3rem !important;
 }
@@ -448,5 +446,70 @@ body {
   height: 100%;
   width: 100%;
   object-fit: cover !important;
+}
+
+.main-gallery {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  grid-template:
+    "u d d" 33vh
+    "t t c" 33vh
+    "q s c" 33vh /
+    auto auto auto;
+}
+
+.box1 {
+  grid-area: u;
+}
+
+.box2 {
+  grid-area: d;
+}
+
+.box3 {
+  grid-area: t;
+}
+
+.box4 {
+  grid-area: c;
+}
+
+.box5 {
+  grid-area: q;
+}
+
+.box6 {
+  grid-area: s;
+}
+
+.main-gallery div img {
+  width: 96%;
+  height: 96%;
+  border-radius: 2rem;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .w-50 {
+    width: 100% !important;
+  }
+
+  .main-gallery {
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template:
+      "u d d" 20vh
+      "t t c" 20vh
+      "q s c" 20vh /
+      auto auto auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  header {
+    min-height: 100vh;
+  }
 }
 </style>

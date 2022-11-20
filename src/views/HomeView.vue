@@ -20,7 +20,7 @@
     </nav>
     <section class="container text-white mt-5 px-5 px-md-0">
       <h1 class="display-3 my-5">Technical Assistance <br>Center</h1>
-      <h5 class="my-5 w-50">
+      <h5 class=" my-5 w-50">
         Customers can access Huawei Technical Assistance Center (TAC) 24 hours a day, 7 days a week through TAC hotlines, emails, websites, and mobile APP for product technical consultation, troubleshooting issues, and other service requests.
       </h5>
       <div class="my-5">
@@ -41,7 +41,7 @@
             <div class="card-body">
               <h5 class="card-title">Mission</h5>
               <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                Huawei is committed to connecting all people, homes and organizations that are still offline.
               </p>
             </div>
           </div>
@@ -52,7 +52,7 @@
             <div class="card-body">
               <h5 class="card-title">Vision</h5>
               <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                Huawei’s vision is to bring digital to every person, home and organization for a fully connected, intelligent world.
               </p>
             </div>
           </div>
@@ -63,7 +63,9 @@
             <div class="card-body">
               <h5 class="card-title">Values</h5>
               <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                Openness, <br>
+                Collaboration,<br>
+                Share Success
               </p>
             </div>
           </div>
@@ -72,12 +74,12 @@
     </section>
     <section id="intern" class="text-center mt-5">
       <h1 class="title-gradient">Interns</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus, tortor quis vivamus odio ac risus. Arcu, et a posuere mi interdum porta. Convallis quisque odio tincidunt commodo. Nibh ut blandit semper est leo fusce.
+      <p >
+        At Huawei Enterprise, we want to be part of those who are willing to always learn, we intend to push them to meet and solve the new challenges of telecommunications with our intern program.
       </p>
       <Carousel :autoplay="2000" :wrapAround="true" :breakpoints="breakpoints">
-        <Slide v-for="slide in 5" :key="slide">
-          <img class="carousel__item" src="https://picsum.photos/800" alt="slide">
+        <Slide v-for="slide in ['https://cdn.vysokeskoly.cz/czech-universities/uploads/2020/08/6408.jpg','https://imageio.forbes.com/specials-images/imageserve/887132594/Diverse-Group-of-University-Students-Walking-on-Campus/960x0.jpg?format=jpg&width=960','https://media.www.kent.ac.uk/se/21525/GettyImages-1168366473_2000w.jpg','https://observatory.tec.mx/wp-content/uploads/2019/08/bigstock-Spanish-Male-Student-With-Grou-2862461532-1.jpg','https://www.qs.com/wp-content/uploads/2015/05/students-or-teenagers-with-laptop-and-tablet-computers.jpg']" :key="slide">
+          <img class="carousel__item" :src="slide" alt="slide">
         </Slide>
         <template #addons>
           <Pagination />
@@ -100,7 +102,7 @@
       <article class="col col-12 col-md-6 col-lg-8 ps-md-5">
         <h4 class="title-gradient">Technical Assistance Center</h4>
         <h3>What you will learn in this course?</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        <p>Huawei provides six product lines to develop and grow in the one you prefer.</p>
         <div class="accordion" id="accordionProductLines">
           <div class="accordion-item p-2">
             <h2 class="accordion-header d-flex" id="productLineOne">
@@ -110,13 +112,11 @@
               </button>
             </h2>
             <div id="collapseProductLineOne" class="accordion-collapse collapse show" aria-labelledby="productLineOne" data-bs-parent="#accordionProductLines">
-              <div class="accordion-body">
+              <div class="accordion-body text-justify">
                 <b>5G</b><br>
-                The development of global 5G in network, deployment, ecology and experience is beyond imagination. Whether for individuals, families or every organization, 5G is creating unprecedented value. We will work closely with our customers and partners to focus on 5G innovative applications, prosper the 5G ecosystem, and accelerate 5G commercial success.<br><br>
+                The development of global 5G in network, deployment, ecology and experience is beyond imagination.<br><br>
                 <b>LTE Network</b><br>
-                Zero fallback refers to expansion of the fundamental LTE network coverage so that it is the same as that of 2G and 3G networks. With expanded coverage, LTE data, VoLTE, and IoT services will always be provided by the LTE network. Users will no longer fall back to 2G or 3G networks. The enhanced coverage also lays a foundation for 2G and 3G users to be migrated to LTE networks.<br><br>
-                <b>Microwave</b><br>
-                Huawei microwave equipment provides a maximum of 20 Gbit/s capacity by using microwave technologies such as CA (carrier aggregation), MIMO (multiple-input multiple-output technology), common microwave frequency band, and E-band realize dual-frequency microwave, through the combination of "1" dual-frequency antenna + "2" (6-86GHz) RF units of any frequency band.<br>
+                Zero fallback refers to expansion of the fundamental LTE network coverage so that it is the same as that of 2G and 3G networks.<br><br>
               </div>
             </div>
           </div>
@@ -128,13 +128,13 @@
               </button>
             </h2>
             <div id="collapseProductLineTwo" class="accordion-collapse collapse" aria-labelledby="productLineTwo" data-bs-parent="#accordionProductLines">
-              <div class="accordion-body">
+              <div class="accordion-body text">
                 <b>Data Communication</b><br>
-                Huawei’s NetEngine, CloudEngine, AirEngine, and HiSecEngine products are used to build a leading data communication solutions. Working with the intelligent Network Cloud Engine, these products allow for simplified, highly available, and multi-service networks and intelligent connections, bringing IP networks into the intelligent era.<br><br>
+                Huawei’s NetEngine, CloudEngine, AirEngine, and HiSecEngine products are used to build a leading data communication solutions.<br><br>
                 <b>Transmission Network</b><br>
-                Huawei is committed to providing carrier and enterprise customers with high-performance transmission solutions featuring high availability, large bandwidth, and intelligence. These carry multiple services, such as video, DC interconnection, and premium private line services. Huawei's leading 200G WDM solutions have served more than 100 operators around the world. <br><br>
+                Huawei is committed to providing carrier and enterprise customers with high-performance transmission solutions featuring high availability, large bandwidth, and intelligence.<br><br>
                 <b>Access Network</b><br>
-                In the access domain, Huawei provides high-bandwidth, intelligent, and simplified all-optical access solutions. These solutions will enable smooth evolution to 10G PON or 50G PON, and meet customer needs for wide Gigabit coverage, 8K and VR videos, and enterprise private lines.
+                In the access domain, Huawei provides high-bandwidth, intelligent, and simplified all-optical access solutions.
               </div>
             </div>
           </div>
@@ -148,8 +148,6 @@
             <div id="collapseProductLineThree" class="accordion-collapse collapse" aria-labelledby="productLineThree" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
                 Huawei provides reliable, resilient, cost-effective, full-stack cloud solutions, from public cloud, hybrid or private cloud, to edge cloud, meeting carriers' diverse needs. <br><br>
-                Huawei provides all-scenario data infrastructure designed for carrier workloads. Huawei storage resource pool solution features on-demand allocation, intelligent management, and multi-cloud convergence to reconstruct carriers data infrastructure for service innovation.<br><br>
-                Huawei is committed to pursuing ongoing innovation in technical architecture and engineering fields. By following the principle of "open hardware, open-source software, partner enablement, and talent cultivation", we grow together with ecosystem partners and provide carriers with intelligent computing featuring ultimate performance.
               </div>
             </div>
           </div>
@@ -188,7 +186,7 @@
             </h2>
             <div id="collapseProductLineSix" class="accordion-collapse collapse" aria-labelledby="productLineSix" data-bs-parent="#accordionProductLines">
               <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Platform update and healt check of the same.
               </div>
             </div>
           </div>
@@ -197,12 +195,12 @@
     </section>
     <div class="container p-lg-5">
       <article class="main-gallery p-lg-5">
-        <div class="box1"><img src="../assets/uno.jpg" alt=""></div>
-        <div class="box2"><img src="../assets/dos.jpg" alt=""></div>
-        <div class="box3"><img src="../assets/tres.jpg" alt=""></div>
-        <div class="box4"><img src="../assets/cuatro.jpg" alt=""></div>
-        <div class="box5"><img src="../assets/cinco.jpg" alt=""></div>
-        <div class="box6"><img src="../assets/seis.jpg" alt=""></div>
+        <div class="box1"><img src="../assets/2.png" alt=""></div>
+        <div class="box2"><img src="../assets/10.png" alt=""></div>
+        <div class="box3"><img src="../assets/16.png" alt=""></div>
+        <div class="box4"><img src="../assets/8.png" alt=""></div>
+        <div class="box5"><img src="../assets/1.png" alt=""></div>
+        <div class="box6"><img src="../assets/13.png" alt=""></div>
       </article>
     </div>
     <br>
@@ -296,28 +294,28 @@ export default {
       },
       testimonials: [
         {
-          name: 'Cameron Williams',
+          name: 'Areli Mendoza',
           job: 'ICT Engineer',
-          testimonial: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
-          image: 'https://picsum.photos/200'
+          testimonial: 'My experience at Huawei has determined a before and after in my professional growth, my abilities to investigate, diagnose, solve problems and determine solutions have grown, and not only my technical skills, but also my soft skills.',
+          image: 'https://picsum.photos/id/64/200/'
         },
         {
-          name: 'Harvey Specter',
+          name: 'Wang Minhyung',
           job: 'ICT Engineer',
-          testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
-          image: 'https://picsum.photos/200'
+          testimonial: 'When I joined Huawei, everything was so unknown to me, little by little I have grown professionally, the important thing is that Huawei teaches you how to do it, the people who work there are people with great knowledge. ',
+          image: 'https://picsum.photos/id/832/200/'
         },
         {
-          name: 'Mike Ross',
+          name: 'Isabel Estrada',
           job: 'ICT Engineer',
-          testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
-          image: 'https://picsum.photos/200'
+          testimonial: 'In Huawei you not only learn a lot of technical things (which is important but not only that), you also learn how to develop with the people inside (your coworkers) and outside (the customers), and something very interesting you also learn about Chinese culture and about them.',
+          image: 'https://picsum.photos/id/823/200/'
         },
         {
-          name: 'Rachel Green',
-          job: 'Ingeniero Chato',
-          testimonial: 'loreum ipsum dolor sit amet, consectetur adipiscing elit. Amet dapibus id aliquam aenean. Aliquet tellus non faucibus dignissim ipsum. Et sed proin nibh adipiscing ac',
-          image: 'https://picsum.photos/200'
+          name: 'Jesus Alvarado',
+          job: 'ICT Engineer',
+          testimonial: 'My experience at Huawei as an intern has been in every possible way helpful, both for my personal and professional growth, and now that I am officially an employee I know that my skills will grow. ',
+          image: 'https://picsum.photos/id/661/200/'
         }
       ],
       testimonialSelected: 0

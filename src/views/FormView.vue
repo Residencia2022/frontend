@@ -43,10 +43,7 @@
     <section class="container text-white mt-5 px-5 px-md-0">
       <h1 class="display-3 my-5">Technical Assistance <br />Center</h1>
       <h5 class="my-md-5 w-50">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure tempora
-        inventore quibusdam, deserunt accusamus magnam porro explicabo adipisci
-        et vel unde fuga optio dignissimos asperiores dolorem tempore
-        voluptatibus. Deserunt, unde.
+        The Huawei TAC intern program is an opportunity for all those who want to venture into the world of telecommunications. To all those who want to learn and find out how far they are able to surpass themselves in both technical knowledge and soft skills.
       </h5>
       <div class="my-5">
         <router-link to="/" class="btn btn-primary">Know more</router-link>
@@ -59,7 +56,7 @@
         <h1>
           Become part of <span class="title-gradient">HUAWEI Mexico TAC</span>
         </h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Hi!, welcome to the application form to apply to our internship program, please enter your data correctly.</p>
         <hr class="hr" />
         <hr />
       </div>
@@ -211,27 +208,27 @@ export default {
       englishLevels: [
         {
           name: 'A1',
-          description: 'lorem a1'
+          description: 'Basic language skills, simple and limited communication, basic vocabulary.'
         },
         {
           name: 'A2',
-          description: 'lorem a2'
+          description: 'Communicate in everyday situations, use simple but longer and more complete sentences, use of present and future tense expressions.'
         },
         {
           name: 'B1',
-          description: 'lorem b1'
+          description: 'Describe situations in conditional and past forms, more coherent and complex speech, express yourself through speech with greater fluency.'
         },
         {
           name: 'B2',
-          description: 'lorem b2'
+          description: 'Upper-intermediate language level, able to create fluent speeches spontaneously.'
         },
         {
           name: 'C1',
-          description: 'lorem c1'
+          description: 'Use of impersonal expressions, and modalities of action verbs, communication with native speakers in a fluent and coherent manner.'
         },
         {
           name: 'C2',
-          description: 'lorem c2'
+          description: 'Use of vocabulary related to the world of business and companies, use of the future in its various forms.'
         }
       ],
       intern: {

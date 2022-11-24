@@ -63,9 +63,10 @@
             <div class="card-body">
               <h5 class="card-title">Values</h5>
               <p class="card-text">
-                Openness, <br>
-                Collaboration,<br>
-                Share Success
+                Stay customer centric, <br>
+                Inspire dedication,<br>
+                Perseverance, <br>
+                Grow by reflection
               </p>
             </div>
           </div>
@@ -193,7 +194,8 @@
         </div>
       </article>
     </section>
-    <div class="container p-lg-5">
+    <div class="container p-lg-5 text-center mt-5">
+      <h1 class="title-gradient">Gallery</h1>
       <article class="main-gallery p-lg-5">
         <div class="box1"><img src="../assets/2.png" alt=""></div>
         <div class="box2"><img src="../assets/10.png" alt=""></div>
